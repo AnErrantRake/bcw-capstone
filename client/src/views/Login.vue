@@ -1,12 +1,12 @@
 <template>
   <div class="login">
     <form v-if="loginForm" @submit.prevent="loginUser">
-      <input type="text" v-model="creds.name" placeholder="Enter your name" />
+      <input type="text" v-model="creds.username" placeholder="Enter your name" />
       <input type="password" v-model="creds.password" placeholder="password" />
       <button class="btn btn-success" type="submit">Login</button>
     </form>
     <form v-else @submit.prevent="register">
-      <input type="text" v-model="newUser.name" placeholder="name" />
+      <input type="text" v-model="newUser.username" placeholder="name" />
       <input type="password" v-model="newUser.password" placeholder="password" />
       <button class="btn btn-warning" type="submit">Create Account</button>
     </form>
@@ -26,12 +26,12 @@ export default {
     return {
       loginForm: true,
       creds: {
-        name: "",
+        username: "",
         password: ""
       },
       newUser: {
         password: "",
-        name: ""
+        username: ""
       }
     };
   },
