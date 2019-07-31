@@ -17,12 +17,20 @@ let api = Axios.create({
 
 export default new Vuex.Store({
   state: {
-    user: {}
+    user: {},
+    ballots: []
   },
   mutations: {
+    //#region -- AUTH STUFF --
     setUser(state, user) {
       state.user = user
+    },
+    //#endregion
+    //#region -- Ballots --
+    addBallot(state, ballot) {
+      state.ballots.push(ballot);
     }
+    //#endregion
   },
   actions: {
     //#region -- AUTH STUFF --
@@ -55,6 +63,15 @@ export default new Vuex.Store({
       } catch (e) {
         console.warn(e.message)
       }
+    },
+    //#endregion
+    //#region -- Ballots --
+    async addBallot({ commit, dispatch }, ballot) {
+      await api.post('ballots', ballot)
+        .then(res => commit('addBallot', res.data))
+        .catch(error => console.error(error));
     }
+    //#endregion
+
   }
 })
