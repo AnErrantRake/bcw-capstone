@@ -21,6 +21,13 @@ export default new Router({
       component: Login
     },
     {
+      path: '/ballot/new',
+      name: 'ballotCreation',
+      component: function () {
+        return import(/* webpackChunkName: "ballotCreation" */ './views/BallotCreation.vue')
+      }
+    },
+    {
       path: '*',
       redirect: '/'
     }

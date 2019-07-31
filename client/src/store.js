@@ -17,12 +17,29 @@ let api = Axios.create({
 
 export default new Vuex.Store({
   state: {
-    user: {}
+    user: {},
+    ballots: []
   },
   mutations: {
+    //#region -- AUTH STUFF --
     setUser(state, user) {
       state.user = user
+    },
+    //#endregion
+    //#region -- Ballots --
+    setBallots(state, ballots) {
+      state.ballots = ballots;
+    },
+    addBallot(state, ballot) {
+      state.ballots.push(ballot);
+    },
+    deleteBallot(state, ballotID) {
+      let index = state.ballots.findIndex(curr => curr._id === ballotID);
+      if (index >= 0) {
+        state.ballots.splice(index, 1);
+      }
     }
+    //#endregion
   },
   actions: {
     //#region -- AUTH STUFF --
@@ -55,6 +72,25 @@ export default new Vuex.Store({
       } catch (e) {
         console.warn(e.message)
       }
+    },
+    //#endregion
+    //#region -- Ballots --
+    async getBallots({ commit, dispatch }) {
+      await api.get('ballots')
+        .then(res => commit('setBallots', res.data))
+        .catch(error => console.error(error));
+    },
+    async addBallot({ commit, dispatch }, ballot) {
+      await api.post('ballots', ballot)
+        .then(res => commit('addBallot', res.data))
+        .catch(error => console.error(error));
+    },
+    async deleteBallot({ commit, dispatch }, ballotID) {
+      await api.delete('ballots/' + ballotID)
+        .then(res => commit('deleteBallot', ballotID))
+        .catch(error => console.error(error));
     }
+    //#endregion
+
   }
 })
