@@ -9,7 +9,7 @@ mongoose.connection.on('error', err => {
 })
 
 import keys from './dbkeys'
-const connectionString = `mongodb+srv://${keys.user}:${keys.password}@cluster0-4eckx.mongodb.net/bcw-capstone?retryWrites=true&w=majority`
+const connectionString = `mongodb+srv://${process.env.DB_USERNAME || keys.user}:${process.env.DB_PASSWORD || keys.password}@cluster0-4eckx.mongodb.net/bcw-capstone?retryWrites=true&w=majority`
 
 
 export default class DbContext {
