@@ -2,6 +2,7 @@ import express from 'express'
 import cors from 'cors'
 import bp from 'body-parser'
 import DbContext from "./db/dbconfig"
+
 const server = express()
 
 //Fire up database connection
@@ -31,6 +32,8 @@ server.use(bp.urlencoded({
 //REGISTER YOUR SESSION, OTHERWISE YOU WILL NEVER GET LOGGED IN
 import AuthController from './controllers/AuthController'
 import Session from "./middleware/session"
+import ElectionController from "./controllers/ElectionController.js"
+server.use('/api/elections', new ElectionController().router)
 server.use(new Session().express)
 server.use('/account', new AuthController().router)
 
