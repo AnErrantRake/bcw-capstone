@@ -36,7 +36,8 @@ server.use('/account', new AuthController().router)
 
 
 //YOUR ROUTES HERE!!!!!!
-
+import BallotController from './controllers/BallotController';
+server.use('/api/ballots', new BallotController().router);
 
 //Default Error Handler
 server.use((error, req, res, next) => {
