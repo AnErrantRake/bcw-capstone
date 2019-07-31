@@ -9,7 +9,7 @@ export default class ElectionController {
         this.router = express.Router()
             .get('/vote/:pin', this.getByPin)
             .put('/vote/:pin', this.addVote)
-            //.use(Authorize.authenticated)
+            .use(Authorize.authenticated)
             .get('', this.getAll)
             .get('/:id', this.getById)
             .post('', this.createElection)

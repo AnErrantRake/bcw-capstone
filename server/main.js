@@ -32,15 +32,15 @@ server.use(bp.urlencoded({
 //REGISTER YOUR SESSION, OTHERWISE YOU WILL NEVER GET LOGGED IN
 import AuthController from './controllers/AuthController'
 import Session from "./middleware/session"
-import ElectionController from "./controllers/ElectionController.js"
-server.use('/api/elections', new ElectionController().router)
+
 server.use(new Session().express)
 server.use('/account', new AuthController().router)
 
-
 //YOUR ROUTES HERE!!!!!!
 import BallotController from './controllers/BallotController';
+import ElectionController from "./controllers/ElectionController.js"
 server.use('/api/ballots', new BallotController().router);
+server.use('/api/elections', new ElectionController().router)
 
 //Default Error Handler
 server.use((error, req, res, next) => {
