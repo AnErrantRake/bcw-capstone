@@ -44,7 +44,7 @@ export default class AuthController {
 
   async login(req, res, next) {
     try {
-      let user = await _makerService.findOne({ email: req.body.email })
+      let user = await _makerService.findOne({ username: req.body.username })
       if (!user) {
         return res.status(400).send("Invalid Username Or Password")
       }
