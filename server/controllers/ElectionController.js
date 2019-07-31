@@ -42,7 +42,7 @@ export default class ElectionController {
     }
     async getAll(req, res, next) {
         try {
-            let data = await _electionService.find({ authorId: req.session.uid })
+            let data = await _electionService.find({ makerID: req.session.uid })
             res.send(data)
         } catch (error) {
             { next(error) }
@@ -50,7 +50,7 @@ export default class ElectionController {
     }
     async getById(req, res, next) {
         try {
-            let data = await _electionService.findOne({ _id: req.params.id, authorId: req.session.uid })
+            let data = await _electionService.findOne({ _id: req.params.id, makerID: req.session.uid })
             res.send(data)
         } catch (error) {
             { next(error) }
@@ -58,7 +58,9 @@ export default class ElectionController {
     }
     async createElection(req, res, next) {
         try {
-            let data = await _electionService.create(req.body)
+            let electionInput = req.body
+            electionInput.makerID = req.session.uid
+            let data = await _electionService.create(electionInput)
             //TODO socket addition and pin numbers
             return res.status(201).send(data)
         } catch (error) {
@@ -67,7 +69,7 @@ export default class ElectionController {
     }
     async deleteElection(req, res, next) {
         try {
-            let data = await _electionService.findOneAndRemove({ _id: req.params.id, authorId: req.session.uid })
+            let data = await _electionService.findOneAndRemove({ _id: req.params.id, makerID: req.session.uid })
             // TODO add sockets 
             return res.send("Election deleted!")
         } catch (error) {
@@ -78,8 +80,8 @@ export default class ElectionController {
     }
     async updateElection(req, res, next) {
         try {
-            let data = await _electionService.findOneAndUpdate({ _id: req.params.id })
-            res.send(data)
+            let data = await _electionService.findOneAndUpdate({ _id: req.params.id }, req.body)
+            return res.send(data)
         } catch (error) {
             { next(error) }
         }

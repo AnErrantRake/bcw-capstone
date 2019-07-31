@@ -18,7 +18,8 @@ let api = Axios.create({
 export default new Vuex.Store({
   state: {
     user: {},
-    ballots: []
+    ballots: [],
+    elections: []
   },
   mutations: {
     //#region -- AUTH STUFF --
@@ -38,8 +39,20 @@ export default new Vuex.Store({
       if (index >= 0) {
         state.ballots.splice(index, 1);
       }
-    }
+    },
     //#endregion
+    setElections(state, elections) {
+      state.elections = elections
+    },
+    startElection(state, election) {
+      state.elections.push(election);
+    },
+    deleteElections(state, electionID) {
+      let index = state.elections.findIndex(curr => curr._id === electionID);
+      if (index >= 0) {
+        state.elections.splice(index, 1);
+      }
+    }
   },
   actions: {
     //#region -- AUTH STUFF --
@@ -89,7 +102,28 @@ export default new Vuex.Store({
       await api.delete('ballots/' + ballotID)
         .then(res => commit('deleteBallot', ballotID))
         .catch(error => console.error(error));
-    }
+    },
+    //#endregion
+
+    //#region -- Elections --
+    async getElections({ commit, dispatch }) {
+      await api.get('elections')
+        .then(res => commit('setElections', res.data))
+        .catch(error => console.error(error));
+    },
+    async startElection({ commit, dispatch }, ballotID) {
+      let election = {
+        pin: 12345, timeoutEpoch: 0, votes: [], ballotID: ballotID
+      }
+      await api.post('elections', election)
+        .then(res => commit('startElection', res.data))
+        .catch(error => console.error(error));
+    },
+    async deleteElections({ commit, dispatch }, electionID) {
+      await api.delete('elections/' + electionID)
+        .then(res => commit('deleteElections', electionID))
+        .catch(error => console.error(error));
+    },
     //#endregion
 
   }
