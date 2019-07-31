@@ -34,7 +34,8 @@
         this.newBallot = {
           name: '',
           noms: []
-        }
+        };
+        this.$router.push({ name: 'home' });
       },
       addNom() {
         this.newBallot.noms.push(this.newRestaurant);
