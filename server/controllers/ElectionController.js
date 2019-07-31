@@ -9,7 +9,7 @@ export default class ElectionController {
         this.router = express.Router()
             .get('/vote/:pin', this.getByPin)
             .put('/vote/:pin', this.addVote)
-            .use(Authorize.authenticated)
+            //.use(Authorize.authenticated)
             .get('', this.getAll)
             .get('/:id', this.getById)
             .post('', this.createElection)
@@ -24,6 +24,7 @@ export default class ElectionController {
     async getByPin(req, res, next) {
         try {
             let data = await _electionService.findOne({ pin: req.params.pin })
+            res.send(data)
         } catch (error) {
             { next(error) }
         }
@@ -42,6 +43,7 @@ export default class ElectionController {
     async getAll(req, res, next) {
         try {
             let data = await _electionService.find({ authorId: req.session.uid })
+            res.send(data)
         } catch (error) {
             { next(error) }
         }
@@ -49,6 +51,7 @@ export default class ElectionController {
     async getById(req, res, next) {
         try {
             let data = await _electionService.findOne({ _id: req.params.id, authorId: req.session.uid })
+            res.send(data)
         } catch (error) {
             { next(error) }
         }
@@ -76,6 +79,7 @@ export default class ElectionController {
     async updateElection(req, res, next) {
         try {
             let data = await _electionService.findOneAndUpdate({ _id: req.params.id })
+            res.send(data)
         } catch (error) {
             { next(error) }
         }

@@ -10,8 +10,9 @@ let _schema = new Schema({
     pin: { type: Number, required: true },
     timeoutEpoch: { type: Number, required: true },
     votes: [{ name: String, voteValues: Object }],
-    ballotId: { type: ObjectId, ref: 'Ballot', required: true },
-    makerId: { type: ObjectId, ref: 'Maker', required: true }
+    //TODO add back ballot id required: true
+    ballotID: { type: ObjectId, ref: 'Ballot', required: false },
+    makerID: { type: ObjectId, ref: 'Maker', required: true }
 
 
 
