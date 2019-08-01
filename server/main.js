@@ -2,11 +2,15 @@ import express from 'express'
 import cors from 'cors'
 import bp from 'body-parser'
 import DbContext from "./db/dbconfig"
+import Socket from './socket'
 
 const server = express()
+const socketServer = require("http").createServer(server)
+const io = require('socket.io')(socketServer)
 
 //Fire up database connection
 DbContext.connect()
+Socket.setIO(io)
 
 //Sets the port to Heroku's, and the files to the built project 
 var port = process.env.PORT || 3000
@@ -39,6 +43,7 @@ server.use('/account', new AuthController().router)
 //YOUR ROUTES HERE!!!!!!
 import BallotController from './controllers/BallotController';
 import ElectionController from "./controllers/ElectionController.js"
+import { Socket } from 'dgram';
 server.use('/api/ballots', new BallotController().router);
 server.use('/api/elections', new ElectionController().router)
 
@@ -55,6 +60,6 @@ server.use('*', (req, res, next) => {
 })
 
 
-server.listen(port, () => {
+socketServer.listen(port, () => {
   console.log('[SRV] Running on port', port)
 })

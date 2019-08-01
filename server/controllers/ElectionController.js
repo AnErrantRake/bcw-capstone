@@ -1,8 +1,8 @@
 import _electionService from '../services/ElectionService.js'
 import express from 'express'
 import { Authorize } from '../middleware/authorize.js'
+import Socket from '../socket/index'
 
-//TODO sockets import
 
 export default class ElectionController {
     constructor() {
@@ -37,8 +37,10 @@ export default class ElectionController {
                 //@ts-ignore
                 data.votes.push(req.body)
                 data.save()
+                Socket.notifyAddVote(data)
             }
             return res.send(data)
+
         } catch (error) {
             { next(error) }
         }
