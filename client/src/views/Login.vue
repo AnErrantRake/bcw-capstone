@@ -14,46 +14,54 @@
       <p v-if="loginForm">No account? Click here to Register</p>
       <p v-else>Already have an account? Click here to Login</p>
     </div>
+    <form @submit.prevent="getElection">
+      <input type="text" v-model="pin" placeholder="pin" />
+      <button class="btn btn-success" type="submit">What's for Lunch?</button>
+    </form>
   </div>
 </template>
 
 
 <script>
-import router from "@/router.js";
-export default {
-  name: "login",
-  data() {
-    return {
-      loginForm: true,
-      creds: {
-        username: "",
-        password: ""
-      },
-      newUser: {
-        password: "",
-        username: ""
-      }
-    };
-  },
-  beforeCreate() {
-    if (this.$store.state.user._id) {
-      this.$router.push({ name: "home" });
-    }
-  },
-  methods: {
-    register() {
-      this.$store.dispatch("register", this.newUser);
+  import router from "@/router.js";
+  export default {
+    name: "login",
+    data() {
+      return {
+        loginForm: true,
+        creds: {
+          username: "",
+          password: ""
+        },
+        newUser: {
+          password: "",
+          username: ""
+        },
+        pin: ''
+      };
     },
-    loginUser() {
-      this.$store.dispatch("login", this.creds);
+    beforeCreate() {
+      if (this.$store.state.user._id) {
+        this.$router.push({ name: "home" });
+      }
+    },
+    methods: {
+      register() {
+        this.$store.dispatch("register", this.newUser);
+      },
+      loginUser() {
+        this.$store.dispatch("login", this.creds);
+      },
+      getElection() {
+        this.$store.dispatch('getElectionByPin', this.pin);
+      }
     }
-  }
-};
+  };
 </script>
 
 
 <style scoped>
-action {
-  cursor: pointer;
-}
+  action {
+    cursor: pointer;
+  }
 </style>

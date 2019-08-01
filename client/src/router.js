@@ -28,6 +28,30 @@ export default new Router({
       }
     },
     {
+      path: '/ballot/:ballotID',
+      name: 'ballot',
+      props: true,
+      component: function () {
+        return import(/* webpackChunkName: "ballot" */ './views/Ballot.vue')
+      }
+    },
+    {
+      path: '/election/:electionID',
+      name: 'election',
+      props: true,
+      component: function () {
+        return import(/* webpackChunkName: "election" */ './views/Election.vue')
+      }
+    },
+    {
+      path: '/election/status/:electionID',
+      name: 'electionStatus',
+      props: true,
+      component: function () {
+        return import(/* webpackChunkName: "electionStatus" */ './views/ElectionStatus.vue')
+      }
+    },
+    {
       path: '*',
       redirect: '/'
     }
