@@ -23,15 +23,22 @@ export default class ElectionController {
     }
     async getByPin(req, res, next) {
         try {
-            let data = await _electionService.findOne({ pin: req.params.pin })
+            let data = await _electionService.findOne({ pin: req.params.pin }).populate("ballotID")
+            if (!data) {
+                return res.status(404).send(data);
+            }
             return res.send(data)
         } catch (error) {
-            { next(error) }
+            next(error)
         }
     }
     async addVote(req, res, next) {
         try {
             let data = await _electionService.findOne({ pin: req.params.pin })
+            if (!data) {
+                return res.status(404).send(data);
+            }
+
             //@ts-ignore
             if (Date.now() < data.timeoutEpoch) {
                 //@ts-ignore
@@ -40,7 +47,7 @@ export default class ElectionController {
             }
             return res.send(data)
         } catch (error) {
-            { next(error) }
+            next(error)
         }
     }
     async getAll(req, res, next) {
@@ -48,15 +55,18 @@ export default class ElectionController {
             let data = await _electionService.find({ makerID: req.session.uid })
             return res.send(data)
         } catch (error) {
-            { next(error) }
+            next(error)
         }
     }
     async getById(req, res, next) {
         try {
             let data = await _electionService.findOne({ _id: req.params.id, makerID: req.session.uid }).populate("ballotID")
+            if (!data) {
+                return res.status(404).send(data);
+            }
             return res.send(data)
         } catch (error) {
-            { next(error) }
+            next(error)
         }
     }
     async createElection(req, res, next) {
@@ -68,7 +78,7 @@ export default class ElectionController {
             //TODO socket addition and pin numbers
             return res.status(201).send(data)
         } catch (error) {
-            { next(error) }
+            next(error)
         }
     }
     async deleteElection(req, res, next) {
@@ -77,7 +87,7 @@ export default class ElectionController {
             // TODO add sockets 
             return res.send("Election deleted!")
         } catch (error) {
-            { next(error) }
+            next(error)
         }
     }
     async updateElection(req, res, next) {
@@ -85,7 +95,7 @@ export default class ElectionController {
             let data = await _electionService.findOneAndUpdate({ _id: req.params.id }, req.body)
             return res.send(data)
         } catch (error) {
-            { next(error) }
+            next(error)
         }
     }
 }

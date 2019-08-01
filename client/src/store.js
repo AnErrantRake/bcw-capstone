@@ -30,6 +30,10 @@ export default new Vuex.Store({
     },
     resetState(state) {
       state.user = {}
+      state.ballots = []
+      state.elections = []
+      state.activeBallot = {}
+      state.activeElection = {}
     },
     //#endregion
     //#region -- Ballots --
@@ -96,7 +100,6 @@ export default new Vuex.Store({
       try {
         let success = await AuthService.Logout()
         if (!success) { }
-        //TODO implement reset state
         commit('resetState')
         router.push({ name: "login" })
       } catch (e) {
@@ -142,11 +145,11 @@ export default new Vuex.Store({
         })
         .catch(error => console.error(error));
     },
-    async getElectionByPin({ commit, dispatch }, pin) {
-      await api.get('elections/vote/' + pin)
+    async getElectionByPin({ commit, dispatch }, electionPin) {
+      await api.get('elections/vote/' + electionPin)
         .then(res => {
           commit('setActiveElection', res.data);
-          router.push({ name: 'election', params: { electionID: res.data._id } });
+          router.push({ name: 'election', params: { electionPin: electionPin } });
         })
         .catch(error => console.error(error));
     },
@@ -167,13 +170,8 @@ export default new Vuex.Store({
     //#region -- Votes --
     async getActiveElection({ commit, dispatch }, electionID) {
       await api.get('elections/' + electionID)
-        .then(res => {
-          commit('setActiveElection', res.data)
-
-        })
-
+        .then(res => commit('setActiveElection', res.data))
         .catch(error => console.error(error));
-
     },
     async getActiveBallot({ commit, dispatch }, ballotID) {
       await api.get('ballots/' + ballotID)
@@ -182,9 +180,9 @@ export default new Vuex.Store({
     },
     async submitVotes({ commit, dispatch }, votes) {
       await api.put('elections/vote/' + this.state.activeElection.pin, votes)
+        .then(() => router.push({ name: 'login' }))
         .catch(error => console.error(error));
     }
-
     //#endregion
 
   }
