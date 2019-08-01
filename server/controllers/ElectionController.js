@@ -63,6 +63,7 @@ export default class ElectionController {
         try {
             let electionInput = req.body
             electionInput.makerID = req.session.uid
+            electionInput.pin = Math.floor(Math.random() * 10000)
             let data = await _electionService.create(electionInput)
             //TODO socket addition and pin numbers
             return res.status(201).send(data)
