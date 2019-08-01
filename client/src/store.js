@@ -63,7 +63,13 @@ export default new Vuex.Store({
     },
     setActiveElection(state, election) {
       state.activeElection = election;
+    },
+    //#region -- Votes --
+    setActiveBallot(state, ballot) {
+      state.activeBallot = ballot
     }
+
+    //#endregion
   },
   actions: {
     //#region -- AUTH STUFF --
@@ -157,6 +163,28 @@ export default new Vuex.Store({
         .then(res => commit('deleteElections', electionID))
         .catch(error => console.error(error));
     },
+    //#endregion
+    //#region -- Votes --
+    async getActiveElection({ commit, dispatch }, electionID) {
+      await api.get('elections/' + electionID)
+        .then(res => {
+          commit('setActiveElection', res.data)
+
+        })
+
+        .catch(error => console.error(error));
+
+    },
+    async getActiveBallot({ commit, dispatch }, ballotID) {
+      await api.get('ballots/' + ballotID)
+        .then(res => commit('setActiveBallot', res.data))
+        .catch(error => console.error(error));
+    },
+    async submitVotes({ commit, dispatch }, votes) {
+      await api.put('elections/vote/' + this.state.activeElection.pin, votes)
+        .catch(error => console.error(error));
+    }
+
     //#endregion
 
   }

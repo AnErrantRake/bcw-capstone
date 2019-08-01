@@ -24,6 +24,7 @@ export default class ElectionController {
     async getByPin(req, res, next) {
         try {
             let data = await _electionService.findOne({ pin: req.params.pin })
+
             res.send(data)
         } catch (error) {
             { next(error) }
@@ -33,6 +34,7 @@ export default class ElectionController {
 
         try {
             let data = await _electionService.findOne({ pin: req.params.pin })
+            console.log(req.body, data)
             data.votes.push(req.body)
             data.save()
             res.send(data)
@@ -50,7 +52,7 @@ export default class ElectionController {
     }
     async getById(req, res, next) {
         try {
-            let data = await _electionService.findOne({ _id: req.params.id, makerID: req.session.uid })
+            let data = await _electionService.findOne({ _id: req.params.id, makerID: req.session.uid }).populate("ballotID")
             res.send(data)
         } catch (error) {
             { next(error) }
