@@ -53,7 +53,7 @@ export default class ElectionController {
     }
     async getById(req, res, next) {
         try {
-            let data = await _electionService.findOne({ _id: req.params.id, makerID: req.session.uid })
+            let data = await _electionService.findOne({ _id: req.params.id, makerID: req.session.uid }).populate("ballotID")
             return res.send(data)
         } catch (error) {
             { next(error) }
