@@ -16,6 +16,14 @@ export default new Router({
       component: Home
     },
     {
+      path: '/election/:electionPin',
+      name: 'election',
+      props: true,
+      component: function () {
+        return import(/* webpackChunkName: "election" */ './views/Election.vue')
+      }
+    },
+    {
       path: '/login',
       name: 'login',
       component: Login
@@ -25,6 +33,22 @@ export default new Router({
       name: 'ballotCreation',
       component: function () {
         return import(/* webpackChunkName: "ballotCreation" */ './views/BallotCreation.vue')
+      }
+    },
+    {
+      path: '/ballot/:ballotID',
+      name: 'ballot',
+      props: true,
+      component: function () {
+        return import(/* webpackChunkName: "ballot" */ './views/Ballot.vue')
+      }
+    },
+    {
+      path: '/election/status/:electionID',
+      name: 'electionStatus',
+      props: true,
+      component: function () {
+        return import(/* webpackChunkName: "electionStatus" */ './views/ElectionStatus.vue')
       }
     },
     {
