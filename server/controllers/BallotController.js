@@ -20,6 +20,9 @@ export default class BallotController {
   async getByID(req, res, next) {
     try {
       let ballot = await _ballotService.findOne({ _id: req.params.id, makerID: req.session.uid });
+      if (!ballot) {
+        return res.status(404).send(ballot);
+      }
       return res.send(ballot);
     } catch (error) {
       next(error);

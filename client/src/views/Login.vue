@@ -34,8 +34,8 @@
           password: ""
         },
         newUser: {
-          password: "",
-          username: ""
+          username: "",
+          password: ""
         },
         pin: ''
       };

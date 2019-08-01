@@ -2,13 +2,18 @@
   <div class="electionStatus">
     <router-link :to="{name: 'home'}">Home</router-link>
     <h1>{{election.pin}}</h1>
-    <h3>Winner:</h3>
-    <p v-for="vote in election.votes">{{vote}}</p>
+    <winner-display :votes="election.votes"></winner-display>
+    <h3>Votees:</h3>
+    <ul>
+      <li v-for="vote in election.votes">{{vote.name}}</li>
+    </ul>
   </div>
 </template>
 
 
 <script>
+  import WinnerDisplay from '@/components/WinnerDisplay.vue'
+
   export default {
     name: 'electionStatus',
     props: ['electionID'],
@@ -24,7 +29,9 @@
       }
     },
     methods: {},
-    components: {}
+    components: {
+      'winner-display': WinnerDisplay
+    }
   }
 </script>
 
