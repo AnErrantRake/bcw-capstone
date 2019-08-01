@@ -152,7 +152,7 @@ export default new Vuex.Store({
     },
     async startElection({ commit, dispatch }, ballotID) {
       let election = {
-        pin: 12345, timeoutEpoch: 0, votes: [], ballotID: ballotID
+        timeoutEpoch: 0, votes: [], ballotID: ballotID
       }
       await api.post('elections', election)
         .then(res => commit('startElection', res.data))

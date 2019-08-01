@@ -24,20 +24,21 @@ export default class ElectionController {
     async getByPin(req, res, next) {
         try {
             let data = await _electionService.findOne({ pin: req.params.pin })
-
-            res.send(data)
+            return res.send(data)
         } catch (error) {
             { next(error) }
         }
     }
     async addVote(req, res, next) {
-
         try {
             let data = await _electionService.findOne({ pin: req.params.pin })
-            console.log(req.body, data)
-            data.votes.push(req.body)
-            data.save()
-            res.send(data)
+            //@ts-ignore
+            if (Date.now() < data.timeoutEpoch) {
+                //@ts-ignore
+                data.votes.push(req.body)
+                data.save()
+            }
+            return res.send(data)
         } catch (error) {
             { next(error) }
         }
@@ -45,7 +46,7 @@ export default class ElectionController {
     async getAll(req, res, next) {
         try {
             let data = await _electionService.find({ makerID: req.session.uid })
-            res.send(data)
+            return res.send(data)
         } catch (error) {
             { next(error) }
         }
@@ -53,7 +54,7 @@ export default class ElectionController {
     async getById(req, res, next) {
         try {
             let data = await _electionService.findOne({ _id: req.params.id, makerID: req.session.uid }).populate("ballotID")
-            res.send(data)
+            return res.send(data)
         } catch (error) {
             { next(error) }
         }
@@ -62,6 +63,7 @@ export default class ElectionController {
         try {
             let electionInput = req.body
             electionInput.makerID = req.session.uid
+            electionInput.pin = Math.floor(Math.random() * 10000)
             let data = await _electionService.create(electionInput)
             //TODO socket addition and pin numbers
             return res.status(201).send(data)
@@ -77,8 +79,6 @@ export default class ElectionController {
         } catch (error) {
             { next(error) }
         }
-
-
     }
     async updateElection(req, res, next) {
         try {
