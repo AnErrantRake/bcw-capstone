@@ -1,5 +1,6 @@
 <template>
   <div class="ballotCreation">
+    <router-link :to="{name: 'home'}">Home</router-link>
     <form @submit.prevent="addBallot">
       <input type="text" placeholder="Ballot Name" v-model='newBallot.name' required>
       <ul>
