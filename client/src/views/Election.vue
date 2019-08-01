@@ -19,6 +19,7 @@
     </div>
     <div v-else>
       <p>The winner is: {{bordaEval}}</p>
+      <!-- <p v-for="vote in election.votes">{{vote}}</p> -->
     </div>
   </div>
 </template>
@@ -51,22 +52,24 @@
         let voteSize = Object.keys(arr[0]).length
 
         for (let i = 0; i < arr.length; i++) {
-          for (let prop in arr[i]) {
+          for (let prop in arr[i].voteValues) {
             if (voteCount.hasOwnProperty(prop)) {
-              voteCount[prop] += voteSize - arr[i][prop] + 1
+              voteCount[prop] += voteSize - arr[i].voteValues[prop] + 1 // + 0 for zero-based borda count
             }
             else {
-              voteCount[prop] = voteSize - arr[i][prop] + 1
+              voteCount[prop] = voteSize - arr[i].voteValues[prop] + 1
             }
           }
         }
         let winnerVotes = -1;
         let winner = 'COWARDICE!'
-        for (key in voteCount) {
+        for (let key in voteCount) {
           if (voteCount[key] > winnerVotes) {
             winner = key;
+            winnerVotes = voteCount[key]
           }
         }
+        console.log(winner)
         return winner;
       }
     },
