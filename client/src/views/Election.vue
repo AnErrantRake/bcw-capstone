@@ -1,6 +1,7 @@
 <template>
   <div class="election">
     <p>Pin: {{election.pin}}</p>
+    <countdown-timer :endTime="election.timeoutEpoch"></countdown-timer>
     <div v-if="election.timeoutEpoch > Date.now()">
       <div v-if="hasName">
         <h3>Name: {{name}}</h3>
@@ -29,6 +30,7 @@
 <script>
   import draggable from "vuedraggable";
   import WinnerDisplay from '@/components/WinnerDisplay.vue'
+  import CountdownTimer from '@/components/CountdownTimer.vue'
 
   export default {
     name: "election",
@@ -70,7 +72,8 @@
     },
     components: {
       draggable,
-      'winner-display': WinnerDisplay
+      'winner-display': WinnerDisplay,
+      'countdown-timer': CountdownTimer
     },
   };
 </script>
