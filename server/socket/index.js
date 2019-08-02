@@ -19,14 +19,19 @@ class Socket {
             message: "Successfully Connected"
         })
     }
-    joinRoom(socket, roomID) {
+    joinRoom(socket, { roomID }) {
         socket.join(roomID)
     }
-    leaveRoom(socket, roomID) {
+    leaveRoom({ roomID }) {
         this.io.leave(roomID)
     }
-    notifyAddVote(socket, data) {
+    notifyAddVote(data) {
+        console.log("vote added to room: " + data._id)
         this.io.to(data._id).emit('addVote', data)
     }
 
 }
+
+const socket = new Socket()
+
+module.exports = socket

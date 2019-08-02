@@ -19,7 +19,7 @@ async function init() {
   }).$mount('#app')
 }
 
-
+store.dispatch("initializeSocket")
 
 
 init()

@@ -1,7 +1,7 @@
 import _electionService from '../services/ElectionService.js'
 import express from 'express'
 import { Authorize } from '../middleware/authorize.js'
-import Socket from '../socket/index'
+import socket from '../socket/index'
 
 
 export default class ElectionController {
@@ -31,14 +31,19 @@ export default class ElectionController {
     }
     async addVote(req, res, next) {
         try {
+
             let data = await _electionService.findOne({ pin: req.params.pin })
             //@ts-ignore
-            if (Date.now() < data.timeoutEpoch) {
-                //@ts-ignore
-                data.votes.push(req.body)
-                data.save()
-                Socket.notifyAddVote(data)
-            }
+            // if (Date.now() < data.timeoutEpoch) {
+            //@ts-ignore
+
+            data.votes.push(req.body)
+
+            data.save()
+            socket.notifyAddVote(data)
+            // } else {
+            //     console.log("vote rejected")
+            // }
             return res.send(data)
 
         } catch (error) {

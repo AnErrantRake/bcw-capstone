@@ -9,26 +9,26 @@
 
 
 <script>
-  export default {
-    name: 'electionStatus',
-    props: ['electionID'],
-    mounted() {
-      this.$store.dispatch('getElectionByID', this.electionID)
-    },
-    data() {
-      return {}
-    },
-    computed: {
-      election() {
-        return this.$store.state.activeElection;
-      }
-    },
-    methods: {},
-    components: {}
-  }
+export default {
+  name: "electionStatus",
+  props: ["electionID"],
+  mounted() {
+    this.$store.dispatch("getElectionByID", this.electionID);
+    this.$store.dispatch("joinRoom", this.electionID);
+  },
+  data() {
+    return {};
+  },
+  computed: {
+    election() {
+      return this.$store.state.activeElection;
+    }
+  },
+  methods: {},
+  components: {}
+};
 </script>
 
 
 <style scoped>
-
 </style>
