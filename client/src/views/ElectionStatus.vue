@@ -2,31 +2,41 @@
   <div class="electionStatus">
     <router-link :to="{name: 'home'}">Home</router-link>
     <h1>{{election.pin}}</h1>
-    <h3>Winner:</h3>
-    <p v-for="vote in election.votes">{{vote}}</p>
+    <countdown-timer :endTime="election.timeoutEpoch"></countdown-timer>
+    <winner-display :votes="election.votes"></winner-display>
+    <h3>Votees:</h3>
+    <ul>
+      <li v-for="vote in election.votes">{{vote.name}}</li>
+    </ul>
   </div>
 </template>
 
 
 <script>
-export default {
-  name: "electionStatus",
-  props: ["electionID"],
-  mounted() {
-    this.$store.dispatch("getElectionByID", this.electionID);
-    this.$store.dispatch("joinRoom", this.electionID);
-  },
-  data() {
-    return {};
-  },
-  computed: {
-    election() {
-      return this.$store.state.activeElection;
+  import WinnerDisplay from '@/components/WinnerDisplay.vue'
+  import CountdownTimer from '@/components/CountdownTimer.vue'
+
+  export default {
+    name: 'electionStatus',
+    props: ['electionID'],
+    mounted() {
+      this.$store.dispatch('getElectionByID', this.electionID)
+      this.$store.dispatch("joinRoom", this.electionID);
+    },
+    data() {
+      return {}
+    },
+    computed: {
+      election() {
+        return this.$store.state.activeElection;
+      }
+    },
+    methods: {},
+    components: {
+      'winner-display': WinnerDisplay,
+      'countdown-timer': CountdownTimer
     }
-  },
-  methods: {},
-  components: {}
-};
+  };
 </script>
 
 

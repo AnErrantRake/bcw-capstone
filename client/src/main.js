@@ -10,8 +10,11 @@ Vue.config.productionTip = false
 
 async function init() {
   let user = await AuthService.Authenticate()
-  if (user) { store.commit("setUser", user) }
-  else { router.push({ name: 'login' }) }
+  if (user) {
+    store.commit("setUser", user)
+  } else {
+    router.push({ name: 'login' })
+  }
   new Vue({
     router,
     store,
