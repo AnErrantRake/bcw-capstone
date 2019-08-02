@@ -2,6 +2,7 @@
   <div class="electionStatus">
     <router-link :to="{name: 'home'}">Home</router-link>
     <h1>{{election.pin}}</h1>
+    <countdown-timer :endTime="election.timeoutEpoch"></countdown-timer>
     <winner-display :votes="election.votes"></winner-display>
     <h3>Votees:</h3>
     <ul>
@@ -13,12 +14,14 @@
 
 <script>
   import WinnerDisplay from '@/components/WinnerDisplay.vue'
+  import CountdownTimer from '@/components/CountdownTimer.vue'
 
   export default {
     name: 'electionStatus',
     props: ['electionID'],
     mounted() {
       this.$store.dispatch('getElectionByID', this.electionID)
+      this.$store.dispatch("joinRoom", this.electionID);
     },
     data() {
       return {}
@@ -30,12 +33,12 @@
     },
     methods: {},
     components: {
-      'winner-display': WinnerDisplay
+      'winner-display': WinnerDisplay,
+      'countdown-timer': CountdownTimer
     }
-  }
+  };
 </script>
 
 
 <style scoped>
-
 </style>
