@@ -26,7 +26,7 @@ class Socket {
         this.io.leave(roomID)
     }
     notifyAddVote(data) {
-        console.log("vote added to room: " + data._id)
+
         this.io.to(data._id).emit('addVote', data)
     }
 
