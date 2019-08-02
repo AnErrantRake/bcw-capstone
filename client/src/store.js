@@ -3,6 +3,9 @@ import Vuex from 'vuex'
 import Axios from 'axios'
 import router from './router'
 import AuthService from './AuthService'
+import io from 'socket.io-client'
+
+let socket = {}
 
 Vue.use(Vuex)
 //Allows axios to work locally or live
@@ -182,8 +185,35 @@ export default new Vuex.Store({
       await api.put('elections/vote/' + this.state.activeElection.pin, votes)
         .then(() => router.push({ name: 'login' }))
         .catch(error => console.error(error));
-    }
+    },
     //#endregion
 
+    //#region -- Sockets --
+
+    initializeSocket({ commit, dispatch }) {
+      // establish socket connection
+      socket = io.connect(base)
+
+      // handle connection events
+      socket.on('CONNECTED', data => {
+        console.log('Connected to socket: ' + data.socket)
+      })
+
+      // register isteners
+      socket.on('addVote', data => {
+        commit('setActiveElection', data)
+      })
+    },
+
+    joinRoom({ commit, dispatch, state }, roomID) {
+
+      socket.emit('join', { roomID })
+    },
+
+    leaveRoom({ commit, dispatch, state }, roomID) {
+      socket.emit('leave', { roomID })
+    }
+
+    //#endregion
   }
 })

@@ -21,6 +21,7 @@
     props: ['electionID'],
     mounted() {
       this.$store.dispatch('getElectionByID', this.electionID)
+      this.$store.dispatch("joinRoom", this.electionID);
     },
     data() {
       return {}
@@ -35,10 +36,9 @@
       'winner-display': WinnerDisplay,
       'countdown-timer': CountdownTimer
     }
-  }
+  };
 </script>
 
 
 <style scoped>
-
 </style>
