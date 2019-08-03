@@ -43,9 +43,12 @@ server.use('/account', new AuthController().router)
 //YOUR ROUTES HERE!!!!!!
 import BallotController from './controllers/BallotController';
 import ElectionController from "./controllers/ElectionController.js"
+import SearchController from "./controllers/SearchController"
+
 // import { Socket } from 'dgram';
 server.use('/api/ballots', new BallotController().router);
 server.use('/api/elections', new ElectionController().router)
+server.use('/api/search', new SearchController().router)
 
 //Default Error Handler
 server.use((error, req, res, next) => {
