@@ -156,10 +156,7 @@ export default new Vuex.Store({
         })
         .catch(error => console.error(error));
     },
-    async startElection({ commit, dispatch }, ballotID) {
-      let election = {
-        timeoutEpoch: 0, votes: [], ballotID: ballotID
-      }
+    async startElection({ commit, dispatch }, election) {
       await api.post('elections', election)
         .then(res => commit('startElection', res.data))
         .catch(error => console.error(error));

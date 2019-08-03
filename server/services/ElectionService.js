@@ -15,11 +15,4 @@ let _schema = new Schema({
   makerID: { type: ObjectId, ref: 'Maker', required: true }
 })
 
-_schema.pre('save', function (next) {
-  let election = this;
-  //@ts-ignore
-  election.timeoutEpoch = Date.now() + (15 * 60 * 1000);
-  next();
-})
-
 export default mongoose.model('Election', _schema)
