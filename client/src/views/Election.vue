@@ -2,7 +2,19 @@
   <div class="election">
     <p>Pin: {{election.pin}}</p>
     <countdown-timer :endTime="election.timeoutEpoch"></countdown-timer>
-    <div v-if="!voted">
+    <div v-if="voted">
+      <!-- this region for the voter status page -->
+      <p>Number of votes: {{ election.votes.length }} </p>
+      <div v-if="election.timeoutEpoch > Date.now()">
+        <p>Current Winner: <winner-display :votes="election.votes"></winner-display>
+        </p>
+      </div>
+      <div v-else>
+        <p>Voting closed! Winner: <winner-display :votes="election.votes"></winner-display>
+        </p>
+      </div>
+    </div>
+    <div v-else>
       <div v-if="election.timeoutEpoch > Date.now()">
         <div v-if="hasName">
           <h3>Name: {{name}}</h3>
@@ -23,18 +35,6 @@
       </div>
       <div v-else>
         <p>Winner is: <winner-display :votes="election.votes"></winner-display>
-        </p>
-      </div>
-    </div>
-    <div v-else>
-      <!-- this region for the voter status page -->
-      <p>Number of votes: {{ election.votes.length }} </p>
-      <div v-if="election.timeoutEpoch > Date.now()">
-        <p>Current Winner: <winner-display :votes="election.votes"></winner-display>
-        </p>
-      </div>
-      <div v-else>
-        <p>Voting closed! Winner: <winner-display :votes="election.votes"></winner-display>
         </p>
       </div>
     </div>
