@@ -194,7 +194,7 @@ export default new Vuex.Store({
     },
     async submitVotes({ commit, dispatch }, votes) {
       await api.put('elections/vote/' + this.state.activeElection.pin, votes)
-        .then(() => router.push({ name: 'login' }))
+        // .then(() => router.push({ name: 'login' })) //dont need this anymore, leaving in because im a hoarder
         .catch(error => console.error(error));
     },
     //#endregion

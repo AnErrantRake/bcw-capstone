@@ -3,7 +3,8 @@
     <router-link :to="{name: 'home'}">Home</router-link>
     <h1>{{election.pin}}</h1>
     <countdown-timer :endTime="election.timeoutEpoch"></countdown-timer>
-    <winner-display :votes="election.votes"></winner-display>
+    <p>Winner: <winner-display :votes="election.votes"></winner-display>
+    </p>
     <h3>Votees:</h3>
     <ul>
       <li v-for="vote in election.votes">{{vote.name}}</li>

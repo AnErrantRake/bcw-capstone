@@ -1,6 +1,6 @@
 <template>
   <div class="winnerDisplay">
-    <h3>Winner: {{bordaEval}}</h3>
+    <span>{{bordaEval}}</span>
   </div>
 </template>
 
