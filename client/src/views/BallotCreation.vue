@@ -36,7 +36,8 @@
       <drop class="col-6" @drop="moveNom">
         <h3>Added:</h3>
         <ul>
-          <li v-for="nom in newBallot.noms">{{nom}}</li>
+          <li v-for="nom in newBallot.noms">{{nom}} <button class="btn btn-sm btn-warning"
+              @click="removeNom(nom)">Remove</button></li>
         </ul>
       </drop>
     </div>
@@ -108,6 +109,10 @@
       searchByLocation() {
         console.log("location set!   " + this.location.latitude + "N " + this.location.longitude + " W")
         this.$store.dispatch('searchByLocation', this.location);
+      },
+      removeNom(nom) {
+        let index = this.newBallot.noms.findIndex(el => el == nom)
+        this.newBallot.noms.splice(index, 1)
       }
 
     },
