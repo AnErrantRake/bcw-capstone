@@ -1,13 +1,15 @@
 <template>
-  <div class="searchResult">
+  <drag class="searchResult" :transfer-data="result">
     <p>{{result.name}}</p>
     <p>{{result.vicinity}}</p>
     <p>{{result.rating}}</p>
-  </div>
+  </drag>
 </template>
 
 
 <script>
+  import { Drop, Drag } from 'vue-drag-drop'; // needs both to compile
+
   export default {
     name: 'searchResult',
     props: ['result'],
@@ -16,7 +18,9 @@
     },
     computed: {},
     methods: {},
-    components: {}
+    components: {
+      Drag
+    }
   }
 </script>
 
