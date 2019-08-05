@@ -112,7 +112,9 @@
       },
       removeNom(nom) {
         let index = this.newBallot.noms.findIndex(el => el == nom)
-        this.newBallot.noms.splice(index, 1)
+        if (index !== -1) {
+          this.newBallot.noms.splice(index, 1)
+        }
       }
 
     },
