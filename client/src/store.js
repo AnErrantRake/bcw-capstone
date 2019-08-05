@@ -39,6 +39,7 @@ export default new Vuex.Store({
       state.activeElection = {}
     },
     //#endregion
+
     //#region -- Ballots --
     setBallots(state, ballots) {
       state.ballots = ballots;
@@ -56,6 +57,8 @@ export default new Vuex.Store({
       state.activeBallot = ballot;
     },
     //#endregion
+
+    //#region -- Elections --
     setElections(state, elections) {
       state.elections = elections
     },
@@ -71,11 +74,6 @@ export default new Vuex.Store({
     setActiveElection(state, election) {
       state.activeElection = election;
     },
-    //#region -- Votes --
-    setActiveBallot(state, ballot) {
-      state.activeBallot = ballot
-    }
-
     //#endregion
   },
   actions: {
@@ -110,6 +108,7 @@ export default new Vuex.Store({
       }
     },
     //#endregion
+
     //#region -- Ballots --
     async getBallots({ commit, dispatch }) {
       await api.get('ballots')
@@ -135,6 +134,7 @@ export default new Vuex.Store({
         .catch(error => console.error(error));
     },
     //#endregion
+
     //#region -- Elections --
     async getElections({ commit, dispatch }) {
       await api.get('elections')
@@ -167,6 +167,7 @@ export default new Vuex.Store({
         .catch(error => console.error(error));
     },
     //#endregion
+
     //#region -- Votes --
     async getActiveElection({ commit, dispatch }, electionID) {
       await api.get('elections/' + electionID)
@@ -186,7 +187,6 @@ export default new Vuex.Store({
     //#endregion
 
     //#region -- Sockets --
-
     initializeSocket({ commit, dispatch }) {
       // establish socket connection
       socket = io.connect(base)
@@ -201,16 +201,13 @@ export default new Vuex.Store({
         commit('setActiveElection', data)
       })
     },
-
     joinRoom({ commit, dispatch, state }, roomID) {
 
       socket.emit('join', { roomID })
     },
-
     leaveRoom({ commit, dispatch, state }, roomID) {
       socket.emit('leave', { roomID })
     }
-
     //#endregion
   }
 })

@@ -42,31 +42,18 @@
       }
     },
     mounted() {
-
-
-      function error() {
-        console.log('Unable to retrieve your location');
-      }
-
-
-
-      if (!navigator.geolocation) {
-        console.log('Geolocation is not supported by your browser')
-      } else {
+      // get location from browser
+      if (navigator.geolocation) {
         console.log('Locating…')
         navigator.geolocation.getCurrentPosition(
           position => {
             this.location.latitude = position.coords.latitude
             this.location.longitude = position.coords.longitude
           },
-          error);
-        debugger
-
+          () => console.error('Unable to retrieve location from browser'));
+      } else {
+        console.log('Geolocation is not supported by your browser')
       }
-
-
-
-
     },
     computed: {},
     methods: {

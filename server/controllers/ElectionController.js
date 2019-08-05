@@ -34,25 +34,16 @@ export default class ElectionController {
     }
     async addVote(req, res, next) {
         try {
-
             let data = await _electionService.findOne({ pin: req.params.pin })
             if (!data) {
                 return res.status(404).send(data);
             }
-
-            //@ts-ignore
-            // if (Date.now() < data.timeoutEpoch) {
-            //@ts-ignore
-
+            // @ts-ignore
             data.votes.push(req.body)
-
             data.save()
-            socket.notifyAddVote(data)
-            // } else {
-            //     console.log("vote rejected")
-            // }
-            return res.send(data)
 
+            socket.notifyAddVote(data)
+            return res.send(data)
         } catch (error) {
             next(error)
         }
@@ -78,11 +69,12 @@ export default class ElectionController {
     }
     async createElection(req, res, next) {
         try {
+            // add author and pin
             let electionInput = req.body
             electionInput.makerID = req.session.uid
             electionInput.pin = Math.floor(Math.random() * 10000)
+
             let data = await _electionService.create(electionInput)
-            //TODO socket addition and pin numbers
             return res.status(201).send(data)
         } catch (error) {
             next(error)
@@ -90,8 +82,7 @@ export default class ElectionController {
     }
     async deleteElection(req, res, next) {
         try {
-            let data = await _electionService.findOneAndRemove({ _id: req.params.id, makerID: req.session.uid })
-            // TODO add sockets 
+            await _electionService.findOneAndRemove({ _id: req.params.id, makerID: req.session.uid })
             return res.send("Election deleted!")
         } catch (error) {
             next(error)
