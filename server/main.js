@@ -6,11 +6,11 @@ import socket from './socket/index'
 
 const server = express()
 const httpServer = require("http").createServer(server)
-const socketServer = require('socket.io')(httpServer)
+const io = require('socket.io')(httpServer)
 
 //Fire up database connection
 DbContext.connect()
-socket.setIO(socketServer)
+socket.setIO(io)
 
 //Sets the port to Heroku's, and the files to the built project 
 var port = process.env.PORT || 3000
@@ -62,6 +62,6 @@ server.use('*', (req, res, next) => {
 })
 
 // @ts-ignore
-socketServer.listen(port, () => {
+httpServer.listen(port, () => {
   console.log('[SRV] Running on port', port)
 })

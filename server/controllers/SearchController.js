@@ -1,46 +1,35 @@
 import express from 'express'
 import _googlePlacesApi from '../services/apis/GooglePlacesService'
-import _yelpApi from '../services/apis/YelpService'
-import _zomatoApi from '../services/apis/ZomatoService'
 import { Authorize } from '../middleware/authorize'
 
-//PUBLIC
 export default class SearchController {
   constructor() {
     this.router = express.Router()
       .use(Authorize.authenticated)
       .get('/google', this.getByLocationFromGoogle)
-      .get('/yelp', this.getByLocationFromYelp)
-      .get('/zomato', this.getByLocationFromZomato)
       .use(this.defaultRoute)
   }
 
   async getByLocationFromGoogle(req, res, next) {
     try {
       // params come in as queries
-      let results = await _googlePlacesApi.get('');
-      res.send(results.data);
-    } catch (error) {
-      next(error)
-    }
-  }
+      let query = {
+        location: `${req.query.lat},${req.query.lon}`,
+        radius: req.query.radius,
+        type: 'restaurant'
+      }
+      // handle optional queries
+      if (req.query.keyword) {
+        query.keyword = req.query.keyword
+      }
 
-  async getByLocationFromYelp(req, res, next) {
-    try {
-      // params come in as queries
-      let results = await _yelpApi.get('');
-      res.send(results.data);
-    } catch (error) {
-      next(error)
-    }
-  }
+      let results = await _googlePlacesApi.get('', {
+        params: query
+      });
 
-  async getByLocationFromZomato(req, res, next) {
-    try {
-      // params come in as queries
-      let results = await _zomatoApi.get('');
-      res.send(results.data);
+      res.send(results.data.results);
     } catch (error) {
+      console.log(error)
       next(error)
     }
   }
@@ -50,5 +39,3 @@ export default class SearchController {
   }
 
 }
-
-

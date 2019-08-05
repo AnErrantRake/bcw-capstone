@@ -24,7 +24,8 @@ export default new Vuex.Store({
     ballots: [],
     elections: [],
     activeBallot: {},
-    activeElection: {}
+    activeElection: {},
+    searchResults: []
   },
   mutations: {
     //#region -- AUTH STUFF --
@@ -37,6 +38,7 @@ export default new Vuex.Store({
       state.elections = []
       state.activeBallot = {}
       state.activeElection = {}
+      state.searchResults = []
     },
     //#endregion
 
@@ -75,6 +77,12 @@ export default new Vuex.Store({
       state.activeElection = election;
     },
     //#endregion
+
+    //#region -- Search --
+    setSearchResults(state, results) {
+      state.searchResults = results;
+    },
+    //#endregion
   },
   actions: {
     //#region -- AUTH STUFF --
@@ -82,7 +90,6 @@ export default new Vuex.Store({
       try {
         let user = await AuthService.Register(creds)
         commit('setUser', user)
-        //TODO push to home
         router.push({ name: "home" })
       } catch (e) {
         console.warn(e.message)
@@ -186,6 +193,14 @@ export default new Vuex.Store({
     },
     //#endregion
 
+    //#region -- Search --
+    async searchByLocation({ commit, dispatch }, location) {
+      await api.get(`search/google/?lat=${location.latitude}&lon=${location.longitude}&radius=${location.radius}&keyword=${location.query}`)
+        .then(res => commit('setSearchResults', res.data))
+        .catch(error => console.error(error));
+    },
+    //#endregion
+
     //#region -- Sockets --
     initializeSocket({ commit, dispatch }) {
       // establish socket connection
@@ -202,12 +217,12 @@ export default new Vuex.Store({
       })
     },
     joinRoom({ commit, dispatch, state }, roomID) {
-
       socket.emit('join', { roomID })
     },
     leaveRoom({ commit, dispatch, state }, roomID) {
       socket.emit('leave', { roomID })
     }
     //#endregion
+
   }
 })
