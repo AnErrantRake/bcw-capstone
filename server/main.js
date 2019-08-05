@@ -5,8 +5,15 @@ import DbContext from "./db/dbconfig"
 import socket from './socket/index'
 
 const server = express()
+const enforce = require('express-sslify');
 const httpServer = require("http").createServer(server)
 const io = require('socket.io')(httpServer)
+
+if (process.env.NODE_ENV === 'production') {
+  // Use enforce.HTTPS({ trustProtoHeader: true }) in case you are behind
+  // a load balancer (e.g. Heroku). See further comments below
+  server.use(enforce.HTTPS());
+}
 
 //Fire up database connection
 DbContext.connect()
