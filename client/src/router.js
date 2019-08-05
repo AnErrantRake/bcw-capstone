@@ -1,8 +1,9 @@
 import Vue from 'vue'
 import Router from 'vue-router'
-import Login from './views/Login.vue'
-import Home from './views/Home.vue'
-
+// @ts-ignore
+import Login from '@/views/Login.vue'
+// @ts-ignore
+import Home from '@/views/Home.vue'
 
 Vue.use(Router)
 
@@ -19,7 +20,8 @@ export default new Router({
       name: 'election',
       props: true,
       component: function () {
-        return import(/* webpackChunkName: "election" */ './views/Election.vue')
+        // @ts-ignore
+        return import(/* webpackChunkName: "election" */ '@/views/Election.vue')
       }
     },
     {
@@ -31,7 +33,8 @@ export default new Router({
       path: '/ballot/new',
       name: 'ballotCreation',
       component: function () {
-        return import(/* webpackChunkName: "ballotCreation" */ './views/BallotCreation.vue')
+        // @ts-ignore
+        return import(/* webpackChunkName: "ballotCreation" */ '@/views/BallotCreation.vue')
       }
     },
     {
@@ -39,7 +42,8 @@ export default new Router({
       name: 'ballot',
       props: true,
       component: function () {
-        return import(/* webpackChunkName: "ballot" */ './views/Ballot.vue')
+        // @ts-ignore
+        return import(/* webpackChunkName: "ballot" */ '@/views/Ballot.vue')
       }
     },
     {
@@ -47,7 +51,8 @@ export default new Router({
       name: 'electionStatus',
       props: true,
       component: function () {
-        return import(/* webpackChunkName: "electionStatus" */ './views/ElectionStatus.vue')
+        // @ts-ignore
+        return import(/* webpackChunkName: "electionStatus" */ '@/views/ElectionStatus.vue')
       }
     },
     {

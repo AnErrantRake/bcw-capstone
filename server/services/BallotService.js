@@ -1,6 +1,6 @@
 import mongoose from "mongoose"
-let Schema = mongoose.Schema
-let ObjectId = Schema.Types.ObjectId
+const Schema = mongoose.Schema
+const ObjectId = Schema.Types.ObjectId
 
 let _schema = new Schema({
   name: { type: String, required: true },

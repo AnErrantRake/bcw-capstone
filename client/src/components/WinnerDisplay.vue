@@ -17,7 +17,7 @@
         let arr = this.votes;
         let winner = 'No Votes!'
         if (!arr || arr.length <= 0) {
-          return winner
+          return winner;
         }
 
         let voteCount = {}
