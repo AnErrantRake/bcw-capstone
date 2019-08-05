@@ -12,7 +12,7 @@ const io = require('socket.io')(httpServer)
 if (process.env.NODE_ENV === 'production') {
   // Use enforce.HTTPS({ trustProtoHeader: true }) in case you are behind
   // a load balancer (e.g. Heroku). See further comments below
-  server.use(enforce.HTTPS());
+  server.use(enforce.HTTPS({ trustProtoHeader: true }));
 }
 
 //Fire up database connection
