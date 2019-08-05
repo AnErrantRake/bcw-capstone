@@ -24,7 +24,8 @@ export default new Vuex.Store({
     ballots: [],
     elections: [],
     activeBallot: {},
-    activeElection: {}
+    activeElection: {},
+    searchResults: []
   },
   mutations: {
     //#region -- AUTH STUFF --
@@ -37,8 +38,10 @@ export default new Vuex.Store({
       state.elections = []
       state.activeBallot = {}
       state.activeElection = {}
+      state.searchResults = []
     },
     //#endregion
+
     //#region -- Ballots --
     setBallots(state, ballots) {
       state.ballots = ballots;
@@ -56,6 +59,8 @@ export default new Vuex.Store({
       state.activeBallot = ballot;
     },
     //#endregion
+
+    //#region -- Elections --
     setElections(state, elections) {
       state.elections = elections
     },
@@ -71,11 +76,18 @@ export default new Vuex.Store({
     setActiveElection(state, election) {
       state.activeElection = election;
     },
-    //#region -- Votes --
-    setActiveBallot(state, ballot) {
-      state.activeBallot = ballot
-    }
+    //#endregion
 
+    //#region -- Search --
+    setSearchResults(state, results) {
+      state.searchResults = results;
+    },
+    removeResult(state, resultID) {
+      let index = state.searchResults.findIndex(curr => curr.id === resultID);
+      if (index >= 0) {
+        state.searchResults.splice(index, 1);
+      }
+    },
     //#endregion
   },
   actions: {
@@ -84,7 +96,6 @@ export default new Vuex.Store({
       try {
         let user = await AuthService.Register(creds)
         commit('setUser', user)
-        //TODO push to home
         router.push({ name: "home" })
       } catch (e) {
         console.warn(e.message)
@@ -110,6 +121,7 @@ export default new Vuex.Store({
       }
     },
     //#endregion
+
     //#region -- Ballots --
     async getBallots({ commit, dispatch }) {
       await api.get('ballots')
@@ -135,6 +147,7 @@ export default new Vuex.Store({
         .catch(error => console.error(error));
     },
     //#endregion
+
     //#region -- Elections --
     async getElections({ commit, dispatch }) {
       await api.get('elections')
@@ -156,10 +169,7 @@ export default new Vuex.Store({
         })
         .catch(error => console.error(error));
     },
-    async startElection({ commit, dispatch }, ballotID) {
-      let election = {
-        timeoutEpoch: 0, votes: [], ballotID: ballotID
-      }
+    async startElection({ commit, dispatch }, election) {
       await api.post('elections', election)
         .then(res => commit('startElection', res.data))
         .catch(error => console.error(error));
@@ -170,6 +180,7 @@ export default new Vuex.Store({
         .catch(error => console.error(error));
     },
     //#endregion
+
     //#region -- Votes --
     async getActiveElection({ commit, dispatch }, electionID) {
       await api.get('elections/' + electionID)
@@ -188,8 +199,18 @@ export default new Vuex.Store({
     },
     //#endregion
 
-    //#region -- Sockets --
+    //#region -- Search --
+    async searchByLocation({ commit, dispatch }, location) {
+      await api.get(`search/google/?lat=${location.latitude}&lon=${location.longitude}&radius=${location.radius}&keyword=${location.query}`)
+        .then(res => commit('setSearchResults', res.data))
+        .catch(error => console.error(error));
+    },
+    removeResult({ commit, dispatch }, resultID) {
+      commit('removeResult', resultID);
+    },
+    //#endregion
 
+    //#region -- Sockets --
     initializeSocket({ commit, dispatch }) {
       // establish socket connection
       socket = io.connect(base)
@@ -204,16 +225,13 @@ export default new Vuex.Store({
         commit('setActiveElection', data)
       })
     },
-
     joinRoom({ commit, dispatch, state }, roomID) {
-
       socket.emit('join', { roomID })
     },
-
     leaveRoom({ commit, dispatch, state }, roomID) {
       socket.emit('leave', { roomID })
     }
-
     //#endregion
+
   }
 })

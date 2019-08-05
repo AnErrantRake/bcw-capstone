@@ -25,12 +25,12 @@
       }
     },
     created() {
-      moment.relativeTimeThreshold('ss', 0); // min seconds for a second
-      moment.relativeTimeThreshold('s', 120); // min seconds for a minute
-      moment.relativeTimeThreshold('m', 50); // min minutes for an hour
-      moment.relativeTimeThreshold('h', 18); // min hours for a day
-      moment.relativeTimeThreshold('d', 22); // min days for a month
-      moment.relativeTimeThreshold('M', 9); // min months for a year
+      moment.relativeTimeThreshold('ss', 0);   // minimum # seconds for second display
+      moment.relativeTimeThreshold('s', 120);  // minimum # seconds for minute display
+      moment.relativeTimeThreshold('m', 50);   // minimum # minutes for hour display
+      moment.relativeTimeThreshold('h', 18);   // minimum # hours for day display
+      moment.relativeTimeThreshold('d', 22);   // minimum # days for month display
+      moment.relativeTimeThreshold('M', 9);    // minimum # months for year display
 
       this.updateCountdown(); // immediate update
       this.timer = setInterval(this.updateCountdown, 1000) // keep countdown updated
