@@ -74,6 +74,7 @@ export default new Vuex.Store({
       }
     },
     setActiveElection(state, election) {
+
       state.activeElection = election;
     },
     //#endregion
@@ -124,12 +125,12 @@ export default new Vuex.Store({
 
     //#region -- Ballots --
     async getBallots({ commit, dispatch }) {
-      await api.get('ballots')
+      api.get('ballots')
         .then(res => commit('setBallots', res.data))
         .catch(error => console.error(error));
     },
     async getBallotByID({ commit, dispatch }, ballotID) {
-      await api.get('ballots/' + ballotID)
+      api.get('ballots/' + ballotID)
         .then(res => {
           commit('setActiveBallot', res.data);
           router.push({ name: 'ballot', params: { ballotID: res.data._id } });
@@ -137,12 +138,12 @@ export default new Vuex.Store({
         .catch(error => console.error(error));
     },
     async addBallot({ commit, dispatch }, ballot) {
-      await api.post('ballots', ballot)
+      api.post('ballots', ballot)
         .then(res => commit('addBallot', res.data))
         .catch(error => console.error(error));
     },
     async deleteBallot({ commit, dispatch }, ballotID) {
-      await api.delete('ballots/' + ballotID)
+      api.delete('ballots/' + ballotID)
         .then(res => commit('deleteBallot', ballotID))
         .catch(error => console.error(error));
     },
@@ -150,19 +151,20 @@ export default new Vuex.Store({
 
     //#region -- Elections --
     async getElections({ commit, dispatch }) {
-      await api.get('elections')
+      api.get('elections')
         .then(res => commit('setElections', res.data))
         .catch(error => console.error(error));
     },
     async getElectionByID({ commit, dispatch }, electionID) {
-      await api.get('elections/' + electionID)
+      api.get('elections/' + electionID)
         .then(res => {
           commit('setActiveElection', res.data);
+          dispatch("joinRoom", electionID);
         })
         .catch(error => console.error(error));
     },
     async getElectionByPin({ commit, dispatch }, electionPin) {
-      await api.get('elections/vote/' + electionPin)
+      api.get('elections/vote/' + electionPin)
         .then(res => {
           commit('setActiveElection', res.data);
           router.push({ name: 'election', params: { electionPin: electionPin } });
@@ -170,12 +172,12 @@ export default new Vuex.Store({
         .catch(error => console.error(error));
     },
     async startElection({ commit, dispatch }, election) {
-      await api.post('elections', election)
+      api.post('elections', election)
         .then(res => commit('startElection', res.data))
         .catch(error => console.error(error));
     },
     async deleteElection({ commit, dispatch }, electionID) {
-      await api.delete('elections/' + electionID)
+      api.delete('elections/' + electionID)
         .then(res => commit('deleteElections', electionID))
         .catch(error => console.error(error));
     },
@@ -183,29 +185,34 @@ export default new Vuex.Store({
 
     //#region -- Votes --
     async getActiveElection({ commit, dispatch }, electionID) {
-      await api.get('elections/' + electionID)
+      api.get('elections/' + electionID)
         .then(res => commit('setActiveElection', res.data))
         .catch(error => console.error(error));
     },
     async getActiveBallot({ commit, dispatch }, ballotID) {
-      await api.get('ballots/' + ballotID)
+      api.get('ballots/' + ballotID)
         .then(res => commit('setActiveBallot', res.data))
         .catch(error => console.error(error));
     },
-    async submitVotes({ commit, dispatch }, votes) {
-      await api.put('elections/vote/' + this.state.activeElection.pin, votes)
+    async submitVotes({ commit, dispatch, state }, votes) {
+      api.put('elections/vote/' + state.activeElection.pin, votes)
+        .then(res => {
+          if (state.user._id) {
+            router.push({ name: 'electionStatus', params: { electionID: state.activeElection._id } })
+          }
+        })
         .catch(error => console.error(error));
     },
     //#endregion
 
     //#region -- Search --
     async searchByCoords({ commit, dispatch }, location) {
-      await api.get(`search/google/?lat=${location.latitude}&lon=${location.longitude}&radius=${location.radius}&keyword=${location.query}`)
+      api.get(`search/google/?lat=${location.latitude}&lon=${location.longitude}&radius=${location.radius}&keyword=${location.query}`)
         .then(res => commit('setSearchResults', res.data))
         .catch(error => console.error(error));
     },
     async searchByAddress({ commit, dispatch }, location) {
-      await api.get(`search/google/?address=${location.address}&radius=${location.radius}&keyword=${location.query}`)
+      api.get(`search/google/?address=${location.address}&radius=${location.radius}&keyword=${location.query}`)
         .then(res => commit('setSearchResults', res.data))
         .catch(error => console.error(error));
     },
@@ -226,6 +233,7 @@ export default new Vuex.Store({
 
       // register isteners
       socket.on('addVote', data => {
+
         commit('setActiveElection', data)
       })
     },

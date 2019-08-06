@@ -37,7 +37,10 @@
     props: ['electionID'],
     mounted() {
       this.$store.dispatch('getElectionByID', this.electionID)
-      this.$store.dispatch("joinRoom", this.electionID);
+
+    },
+    beforeDestroy() {
+      this.$store.dispatch("leaveRoom", this.electionID)
     },
     data() {
       return {}

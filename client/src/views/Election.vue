@@ -104,10 +104,6 @@
         }
         this.$store.dispatch("submitVotes", output);
         this.voted = true
-
-        if (this.user.username) {
-          this.$router.push({ name: 'electionStatus', params: { electionID: this.election._id } })
-        }
       }
     },
     components: {

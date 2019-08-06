@@ -26,7 +26,7 @@
               </div>
             </div>
           </div>
-          <div class="modal-footer">z
+          <div class="modal-footer">
             <button @click="startElection" class="btn btn-primary" type="submit" data-dismiss="modal">
               Start Election
             </button>
