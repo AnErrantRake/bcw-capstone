@@ -1,12 +1,17 @@
 <template>
   <div id="app">
     <nav class="navbar navbar-expand-lg navbar-dark bg-primary" id="navbar">
+
       <router-link v-if="user._id" class="navbar-brand text-center" :to="{name: 'home'}">
-        <i class="fas fa-hashtag"></i> WaFL - What's for Lunch?
-      </router-link>
+        <svg viewBox="0 0 100 100">
+          <use xlink:href=".\assets\waffle.svg#Capa_1" class="logo"></use>
+        </svg>
+        WaFL </router-link>
       <span v-else class="navbar-brand text-center">
-        <i class="fas fa-hashtag"></i> WaFL - What's for Lunch?
-      </span>
+        <svg viewBox="0 0 100 100">
+          <use xlink:href=".\assets\waffle.svg#Capa_1" class="logo"></use>
+        </svg>
+        WaFL </span>
 
       <button v-if="user._id" class="navbar-toggler" type="button" data-toggle="collapse"
         data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false"
@@ -48,6 +53,8 @@
     }
   };
 </script>
-
 <style scoped>
+  .logo {
+    fill: white;
+  }
 </style>
