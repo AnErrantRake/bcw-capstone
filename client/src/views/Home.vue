@@ -1,5 +1,5 @@
 <template>
-  <div class="home">
+  <div class="home container">
     <div class="modal fade" id="dateModal" tabindex="-1" role="dialog">
       <div class="modal-dialog" role="document">
         <div class="modal-content">
@@ -9,7 +9,7 @@
               <span>&times;</span>
             </button>
           </div>
-          <div class="modal-body container">
+          <div class="modal-body">
             <div class="row">
               <div class="col-6">
                 <h3>Restaurants</h3>
@@ -38,7 +38,6 @@
     </div>
     <div class="row text-center">
       <div class="col-12 mt-3 mb-3">
-        <h1>Welcome to WFL!</h1>
       </div>
       <div class="col-12 mb-3">
         <router-link class="btn btn-primary" :to="{name: 'ballotCreation'}">Create a new WFL</router-link>
