@@ -199,8 +199,13 @@ export default new Vuex.Store({
     //#endregion
 
     //#region -- Search --
-    async searchByLocation({ commit, dispatch }, location) {
+    async searchByCoords({ commit, dispatch }, location) {
       await api.get(`search/google/?lat=${location.latitude}&lon=${location.longitude}&radius=${location.radius}&keyword=${location.query}`)
+        .then(res => commit('setSearchResults', res.data))
+        .catch(error => console.error(error));
+    },
+    async searchByAddress({ commit, dispatch }, location) {
+      await api.get(`search/google/?address=${location.address}&radius=${location.radius}&keyword=${location.query}`)
         .then(res => commit('setSearchResults', res.data))
         .catch(error => console.error(error));
     },
