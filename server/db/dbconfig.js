@@ -8,7 +8,7 @@ mongoose.connection.on('error', err => {
   console.error('[DB] Error:', err)
 })
 
-const connectionString = `mongodb+srv://${process.env.DB_USERNAME}:${process.env.DB_PASSWORD}@cluster0-4eckx.mongodb.net/bcw-capstone?retryWrites=true&w=majority`
+const connectionString = `mongodb+srv://${process.env.WAFL_DB_USERNAME}:${process.env.WAFL_DB_PASSWORD}@cluster0-4eckx.mongodb.net/bcw-capstone?retryWrites=true&w=majority`
 
 export default class DbContext {
   static async connect() {

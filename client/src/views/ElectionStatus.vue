@@ -24,6 +24,7 @@
     <div class="row" v-for="vote in election.votes">
       <div class="col"><span>{{vote.name}}</span></div>
     </div>
+
   </div>
 </template>
 
@@ -31,6 +32,7 @@
 <script>
   import WinnerDisplay from '@/components/WinnerDisplay.vue'
   import CountdownTimer from '@/components/CountdownTimer.vue'
+  import copy from 'clipboard-copy'
 
   export default {
     name: 'electionStatus',
@@ -50,7 +52,19 @@
         return this.$store.state.activeElection;
       }
     },
-    methods: {},
+    methods: {
+      addElectionLinkToClipboard() {
+        console.log(this.$router.resolve(location))
+        const a = document.createElement('a');
+        a.href = this.$router.resolve(location).href;
+        console.log(a.href);
+        if (process.env.NODE_ENV === 'development') {
+          copy(`${location.hostname}:${location.port}/#/election/${this.election.pin}`)
+        } else {
+          copy(`https://${location.hostname}/#/election/${this.election.pin}`)
+        }
+      }
+    },
     components: {
       'winner-display': WinnerDisplay,
       'countdown-timer': CountdownTimer
