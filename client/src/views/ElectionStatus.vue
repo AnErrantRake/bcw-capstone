@@ -1,6 +1,5 @@
 <template>
   <div class="electionStatus">
-    <router-link :to="{name: 'home'}">Home</router-link>
     <h1>{{election.pin}}</h1>
     <countdown-timer :endTime="election.timeoutEpoch"></countdown-timer>
     <p>Winner: <winner-display :votes="election.votes"></winner-display>

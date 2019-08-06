@@ -1,6 +1,6 @@
 <template>
   <div class="ballot">
-    <router-link :to="{name: 'home'}">Home</router-link>
+
     <h1>{{ballot.name}}</h1>
     <p v-for="nom in ballot.noms">{{nom}}</p>
   </div>

@@ -1,9 +1,6 @@
 <template>
   <div class="ballotCreation container-fluid">
     <div class="row">
-      <router-link :to="{name: 'home'}">Home</router-link>
-    </div>
-    <div class="row">
       <div class="col-6">
         <div class="btn-group btn-group-toggle" data-toggle="buttons">
           <label @click="showCoordinateSearch" class="btn btn-secondary active">
