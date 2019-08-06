@@ -22,7 +22,7 @@
       </div>
     </div>
     <div class="row" v-for="vote in election.votes">
-      <div class="col">{{vote.name}}</div>
+      <div class="col"><span>{{vote.name}}</span></div>
     </div>
   </div>
 </template>

@@ -46,11 +46,11 @@
         </div>
       </div>
       <div class="row m-2" v-for="ballot in ballots">
-        <span :to="{name: 'ballot', params:{ballotID: ballot._id}}"
+        <div :to="{name: 'ballot', params:{ballotID: ballot._id}}"
           class="col-5 col-sm-8 col-md-9 col-lg-10 text-primary" @click="setActiveBallot(ballot)" data-toggle="modal"
           data-target="#dateModal">
-          {{ballot.name}}
-        </span>
+          <span>{{ballot.name}}</span>
+        </div>
         <div class="col">
           <button @click="setActiveBallot(ballot)" data-toggle="modal" data-target="#dateModal"
             class="btn btn-primary btn-sm mx-1" type="submit">Start</button>
@@ -61,7 +61,7 @@
     <div class="border  mt-3">
       <div class="row">
         <div class="col">
-          <h3 id="active" class="text-center">Hot WaFLs</h3>
+          <h3 class="text-center">Hot WaFLs</h3>
         </div>
       </div>
       <div class="row m-2" v-for="election in elections" v-if="isActive(election)">
