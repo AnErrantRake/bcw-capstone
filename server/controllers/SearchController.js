@@ -42,7 +42,6 @@ export default class SearchController {
         reqLocation = `${req.query.lat},${req.query.lon}`;
       } else if (req.query.address) { // handle address
         reqLocation = await googleGeoCode(req.query.address);
-        console.log(reqLocation)
       } else { // location is required
         return res.status(400).send('Location invalid');
       }
