@@ -11,7 +11,7 @@
           </div>
           <div class="modal-body">
             <div class="row">
-              <div class="col-6">
+              <div class="col">
                 <h3>Restaurants</h3>
                 <table>
                   <tr v-for="nom in activeBallot.noms">
@@ -19,7 +19,7 @@
                   </tr>
                 </table>
               </div>
-              <div class="col-6">
+              <div class="col">
                 <h3>End Time</h3>
                 <input type="time" v-model="timestamp" name id />
                 <input type="date" v-model="date" name id />
@@ -27,40 +27,74 @@
             </div>
           </div>
           <div class="modal-footer">
-            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
             <button @click="startElection" class="btn btn-primary" type="submit" data-dismiss="modal">
-              Start
-              Election
+              Start Election
             </button>
           </div>
         </div>
       </div>
     </div>
-    <div class="row text-center">
-      <div class="col-12 mt-3 mb-3">
+    <div class="border  mt-3">
+      <div class="row text-center">
+        <div class="col my-1">
+          <router-link class="btn btn-primary" :to="{name: 'ballotCreation'}">New Template</router-link>
+        </div>
       </div>
-      <div class="col-12 mb-3">
-        <router-link class="btn btn-primary" :to="{name: 'ballotCreation'}">Create a new WFL</router-link>
+      <div class="row text-center">
+        <div class="col">
+          <h3 id="start">WaFL Irons</h3>
+        </div>
       </div>
-      <div class="col-12">
-        <h3 id="start">Start a WFL</h3>
+
+
+      <div class="row m-2" v-for="ballot in ballots">
+
+        <router-link :to="{name: 'ballot', params:{ballotID: ballot._id}}" class="col-5 col-sm-8 col-md-9 col-lg-10">
+          {{ballot.name}}
+        </router-link>
+
+        <div class="col">
+          <button @click="setActiveBallot(ballot)" data-toggle="modal" data-target="#dateModal"
+            class="btn btn-primary btn-sm mx-1" type="submit">Start</button>
+          <button @click="deleteBallot(ballot._id)" class="btn btn-danger btn-sm" type="submit">Delete</button>
+        </div>
       </div>
     </div>
-    <ul>
-      <li v-for="ballot in ballots">
-        <router-link :to="{name: 'ballot', params:{ballotID: ballot._id}}">{{ballot.name}}</router-link>
-        <button @click="setActiveBallot(ballot)" data-toggle="modal" data-target="#dateModal" class="btn btn-primary"
-          type="submit">Start</button>
-        <button @click="deleteBallot(ballot._id)" class="btn btn-danger" type="submit">Delete</button>
-      </li>
-    </ul>
-    <h1 id="active">Elections</h1>
-    <ul>
-      <li v-for="election in elections">
-        <router-link :to="{name: 'electionStatus', params:{electionID: election._id}}">{{election.pin}}</router-link>
-        <button @click="deleteElection(election._id)" class="btn btn-danger" type="submit">Delete</button>
-      </li>
-    </ul>
+
+
+    <div class="border  mt-3">
+      <div class="row">
+        <div class="col">
+          <h3 id="active" class="text-center">Hot WaFLs</h3>
+        </div>
+      </div>
+
+      <div class="row m-2" v-for="election in elections" v-if="isActive(election)">
+        <router-link :to="{name: 'electionStatus', params:{electionID: election._id}}"
+          class="col-5 col-sm-8 col-md-9 col-lg-10">{{election.pin}}</router-link>
+        <div class="col">
+          <button @click="" class="btn btn-primary btn-sm mx-1" type="submit">Vote</button>
+          <button @click="deleteElection(election._id)" class="btn btn-danger btn-sm" type="submit">Delete</button>
+        </div>
+      </div>
+    </div>
+
+    <div class="border  my-3">
+      <div class="row">
+        <div class="col">
+          <h3 id="active" class="text-center">Eaten WaFLs</h3>
+        </div>
+      </div>
+
+      <div class="row m-2" v-for="election in elections" v-if="!isActive(election)">
+        <router-link :to="{name: 'electionStatus', params:{electionID: election._id}}"
+          class="col-5 col-sm-8 col-md-9 col-lg-10">{{election.pin}}</router-link>
+        <div class="col">
+          <button @click="deleteElection(election._id)" class="btn btn-danger btn-sm" type="submit">Delete</button>
+        </div>
+      </div>
+    </div>
+
   </div>
 </template>
 
@@ -117,6 +151,10 @@
         };
 
         this.$store.dispatch("startElection", election);
+      },
+      isActive(election) {
+
+        return (moment() <= election.timeoutEpoch)
       }
     },
     components: {}
