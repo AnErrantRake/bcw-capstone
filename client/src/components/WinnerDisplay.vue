@@ -1,7 +1,7 @@
 <template>
-  <div class="winnerDisplay">
-    <span>{{bordaEval}}</span>
-  </div>
+  <span class="winnerDisplay">
+    {{bordaEval}}
+  </span>
 </template>
 
 

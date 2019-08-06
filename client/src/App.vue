@@ -1,7 +1,6 @@
 <template>
   <div id="app">
     <nav class="navbar navbar-expand-lg navbar-dark bg-primary" id="navbar">
-
       <router-link v-if="user._id" class="navbar-brand text-center" :to="{name: 'home'}">
         <svg viewBox="0 0 100 100">
           <use xlink:href=".\assets\waffle.svg#Capa_1" class="logo"></use>
@@ -12,13 +11,11 @@
           <use xlink:href=".\assets\waffle.svg#Capa_1" class="logo"></use>
         </svg>
         WaFL </span>
-
       <button v-if="user._id" class="navbar-toggler" type="button" data-toggle="collapse"
         data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false"
         aria-label="Toggle navigation">
         <span class="navbar-toggler-icon text-white"></span>
       </button>
-
       <div v-if="user._id" class="collapse navbar-collapse" id="navbarSupportedContent">
         <ul class="navbar-nav mr-auto text-right">
           <li class="nav-item active">
@@ -33,7 +30,6 @@
           </li>
         </ul>
       </div>
-
     </nav>
     <router-view />
   </div>

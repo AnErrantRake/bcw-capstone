@@ -37,15 +37,7 @@ export default new Router({
         return import(/* webpackChunkName: "ballotCreation" */ '@/views/BallotCreation.vue')
       }
     },
-    {
-      path: '/ballot/:ballotID',
-      name: 'ballot',
-      props: true,
-      component: function () {
-        // @ts-ignore
-        return import(/* webpackChunkName: "ballot" */ '@/views/Ballot.vue')
-      }
-    },
+
     {
       path: '/election/status/:electionID',
       name: 'electionStatus',

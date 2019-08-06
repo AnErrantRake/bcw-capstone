@@ -1,13 +1,29 @@
 <template>
-  <div class="electionStatus">
-    <h1>{{election.pin}}</h1>
-    <countdown-timer :endTime="election.timeoutEpoch"></countdown-timer>
-    <p>Winner: <winner-display :votes="election.votes"></winner-display>
-    </p>
-    <h3>Votees:</h3>
-    <ul>
-      <li v-for="vote in election.votes">{{vote.name}}</li>
-    </ul>
+  <div class="electionStatus container">
+    <div class="row mt-3">
+      <div class="col text-center">
+        <h1>WaFL Pin: {{election.pin}}</h1>
+      </div>
+    </div>
+    <div class="row my-2">
+      <div class="col">
+        <countdown-timer :endTime="election.timeoutEpoch"></countdown-timer>
+      </div>
+    </div>
+    <div class="row my-2">
+      <div class="col text-center">
+        <h2>What's for Lunch: <winner-display :votes="election.votes"></winner-display>
+        </h2>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col">
+        <h3>Votees:</h3>
+      </div>
+    </div>
+    <div class="row" v-for="vote in election.votes">
+      <div class="col">{{vote.name}}</div>
+    </div>
   </div>
 </template>
 
