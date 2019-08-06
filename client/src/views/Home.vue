@@ -68,7 +68,7 @@
         <router-link :to="{name: 'electionStatus', params:{electionID: election._id}}"
           class="col-5 col-sm-8 col-md-9 col-lg-10">{{election.pin}}</router-link>
         <div class="col">
-          <button @click="" class="btn btn-primary btn-sm mx-1" type="submit">Vote</button>
+          <button @click="getElection(election.pin)" class="btn btn-primary btn-sm mx-1" type="submit">Vote</button>
           <button @click="deleteElection(election._id)" class="btn btn-danger btn-sm" type="submit">Delete</button>
         </div>
       </div>
@@ -147,6 +147,9 @@
       isActive(election) {
 
         return (moment() <= election.timeoutEpoch)
+      },
+      getElection(pin) {
+        this.$store.dispatch('getElectionByPin', pin);
       }
     },
     components: {}
