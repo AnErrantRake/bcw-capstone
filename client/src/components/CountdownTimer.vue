@@ -26,7 +26,7 @@
     },
     created() {
       moment.relativeTimeThreshold('ss', 0);   // minimum # seconds for second display
-      moment.relativeTimeThreshold('s', 120);  // minimum # seconds for minute display
+      moment.relativeTimeThreshold('s', 15);  // minimum # seconds for minute display
       moment.relativeTimeThreshold('m', 50);   // minimum # minutes for hour display
       moment.relativeTimeThreshold('h', 18);   // minimum # hours for day display
       moment.relativeTimeThreshold('d', 22);   // minimum # days for month display
