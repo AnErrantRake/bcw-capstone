@@ -1,7 +1,17 @@
 <template>
-  <div class="election">
-    <p>Pin: {{election.pin}}</p>
-    <countdown-timer :endTime="election.timeoutEpoch"></countdown-timer>
+  <div class="election container-fluid">
+    <div class="row mt-3">
+      <div class="col">
+        <h2>Pin: {{election.pin}}</h2>
+      </div>
+    </div>
+
+    <div class="row my-3">
+      <div class="col">
+        <countdown-timer :endTime="election.timeoutEpoch"></countdown-timer>
+      </div>
+    </div>
+
     <div v-if="voted">
       <!-- this region for the voter status page -->
       <p>Number of votes: {{ election.votes.length }} </p>
@@ -17,14 +27,14 @@
     <div v-else>
       <div v-if="election.timeoutEpoch > Date.now()">
         <div v-if="hasName">
-          <h3>Name: {{name}}</h3>
-          <h3>Options:</h3>
+          <h4>Name: {{name}}</h4>
+          <h4>Ranked Choices:</h4>
           <draggable :list="election.ballotID.noms" :disabled="!enabled" class="list-group" ghost-class="ghost"
             @start="dragging = true" @end="dragging = false">
             <div class="list-group-item" v-for="candidate in election.ballotID.noms" :key="candidate">{{ candidate }}
             </div>
           </draggable>
-          <div class="btn btn-primary" @click="submitVotes">Submit</div>
+          <button class="btn btn-primary mt-3 text-right" @click="submitVotes">Submit</button>
         </div>
         <div v-else>
           <form @submit.prevent="addName">
@@ -62,6 +72,11 @@
     mounted() {
       this.$store.dispatch('getElectionByPin', this.electionPin);
       this.$store.dispatch("joinRoom", this.election._id);
+
+      if (this.user.username) {
+        this.name = this.user.username
+        this.hasName = true
+      }
     },
     computed: {
       election() {
@@ -69,6 +84,9 @@
       },
       draggingInfo() {
         return this.dragging ? "under drag" : "";
+      },
+      user() {
+        return this.$store.state.user;
       }
     },
     methods: {

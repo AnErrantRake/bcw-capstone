@@ -1,11 +1,11 @@
 <template>
   <div class="countdown-timer">
     <div v-if="timeLeft">
-      <h2>{{countdown}} remaining</h2>
-      <h3>(ends at {{readableTime}})</h3>
+      <h3>{{countdown}} remaining</h3>
+      <h4>(ends at {{readableTime}})</h4>
     </div>
     <div v-else>
-      <h2>Voting has closed</h2>
+      <h3>Voting has closed</h3>
     </div>
   </div>
 </template>

@@ -1,8 +1,5 @@
 <template>
-  <div class="ballotCreation container">
-    <div class="row">
-      <router-link :to="{name: 'home'}">Home</router-link>
-    </div>
+  <div class="ballotCreation container-fluid">
     <div class="row">
       <div class="col-6">
         <div class="btn-group btn-group-toggle" data-toggle="buttons">
@@ -14,6 +11,8 @@
           </label>
         </div>
       </div>
+    </div>
+    <div class="row">
       <div class="col-6">
         <form @submit.prevent="addNom">
           <input type="text" placeholder="Restaurant Name" v-model='newRestaurant' required>
