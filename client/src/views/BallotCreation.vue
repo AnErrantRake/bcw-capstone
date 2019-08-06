@@ -37,8 +37,8 @@
       <drop class="col-6" @drop="moveNom">
         <h3>Added:</h3>
         <ul>
-          <li v-for="nom in newBallot.noms">{{nom}} <button class="btn btn-sm btn-warning"
-              @click="removeNom(nom)">Remove</button></li>
+          <li v-for="(nom, index) in newBallot.noms">{{nom}} <button class="btn btn-sm btn-warning"
+              @click="removeNom(index)">Remove</button></li>
         </ul>
       </drop>
     </div>
@@ -73,26 +73,6 @@
         searching: false,
         byCoordinates: true,
         newRestaurant: '',
-        location: {
-          latitude: 0,
-          longitude: 0,
-          radius: 5000,
-          query: ''
-        }
-      }
-    },
-    mounted() {
-      // get location from browser
-      if (navigator.geolocation) {
-        console.log('Locating…')
-        navigator.geolocation.getCurrentPosition(
-          position => {
-            this.location.latitude = position.coords.latitude
-            this.location.longitude = position.coords.longitude
-          },
-          () => console.error('Unable to retrieve location from browser'));
-      } else {
-        console.log('Geolocation is not supported by your browser')
       }
     },
     computed: {
@@ -117,15 +97,8 @@
         this.newBallot.noms.push(receivedNom.name);
         this.$store.dispatch('removeResult', receivedNom.id);
       },
-      searchByLocation() {
-        console.log("location set!   " + this.location.latitude + "N " + this.location.longitude + " W")
-        this.$store.dispatch('searchByLocation', this.location);
-      },
-      removeNom(nom) {
-        let index = this.newBallot.noms.findIndex(el => el == nom)
-        if (index !== -1) {
-          this.newBallot.noms.splice(index, 1)
-        }
+      removeNom(index) {
+        this.newBallot.noms.splice(index, 1)
       },
       showCoordinateSearch() {
         // if already displaying coordinate component
@@ -162,22 +135,4 @@
 
 
 <style scoped>
-  .carousel-indicators>.active {
-    background: black;
-  }
-
-  .carousel-indicators {
-    position: static;
-  }
-
-  .carousel-indicators>li {
-    vertical-align: 0;
-    text-align: center;
-    text-indent: 0;
-    width: 100%;
-    height: 100%;
-    position: static;
-    color: white;
-    background: gray;
-  }
 </style>
