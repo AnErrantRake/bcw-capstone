@@ -16,7 +16,7 @@
         aria-label="Toggle navigation">
         <span class="navbar-toggler-icon text-white"></span>
       </button>
-      <div v-if="user._id" class="collapse navbar-collapse " id="navbarSupportedContent">
+      <div v-if="user._id" class="collapse navbar-collapse" id="navbarSupportedContent">
         <ul class="navbar-nav mr-auto text-right">
           <li class="nav-item active">
             <router-link :to="{name:'home'}" class="nav-link">Home</router-link>
