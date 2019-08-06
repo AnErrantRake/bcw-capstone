@@ -4,7 +4,7 @@
       <label for="addressLine1">Line 1</label>
       <input id="addressLine1" type="text" placeholder="700 W Jefferson St" v-model="address.line1" required>
       <label for="addressLine2">Line 2</label>
-      <input id="addressLine2" type="text" placeholder="Apt, Suite, etc" v-model="address.line2" required>
+      <input id="addressLine2" type="text" placeholder="Apt, Suite, etc" v-model="address.line2">
       <label for="addressCityState">City, State</label>
       <input id="addressCityState" type="text" placeholder="Boise, ID" v-model="address.citystate" required>
       <label for="addressZip">Zip Code</label>
