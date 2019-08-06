@@ -13,11 +13,12 @@
       <button class="btn btn-primary btn-sm mb-1 mx-1" type="submit">Login</button>
     </form>
     <form class="ml-1" v-else @submit.prevent="register">
-      <input type="text" v-model="newUser.username" placeholder="name" />
+      <input type="text" v-model="newUser.username" placeholder="name" class="mr-1" />
       <input type="password" v-model="newUser.password" placeholder="password" />
       <button class="btn btn-primary  btn-sm mb-1 mx-1" type="submit">Create Account</button>
     </form>
-    <div class="action" @click="loginForm = !loginForm">
+
+    <div class="action mt-2" @click="loginForm = !loginForm">
       <p v-if="loginForm"> No account? Click <span class="text-primary">here</span> to
         Register</p>
       <p v-else>Already have an account? Click <span class="text-primary">here</span> to Login</p>
