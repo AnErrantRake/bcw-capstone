@@ -82,6 +82,9 @@ export default new Vuex.Store({
     setSearchResults(state, results) {
       state.searchResults = results;
     },
+    resetSearchResults(state, results) {
+      state.searchResults = [];
+    },
     removeResult(state, resultID) {
       let index = state.searchResults.findIndex(curr => curr.id === resultID);
       if (index >= 0) {
@@ -208,6 +211,9 @@ export default new Vuex.Store({
       await api.get(`search/google/?address=${location.address}&radius=${location.radius}&keyword=${location.query}`)
         .then(res => commit('setSearchResults', res.data))
         .catch(error => console.error(error));
+    },
+    resetSearchResults({ commit, dispatch }) {
+      commit('resetSearchResults');
     },
     removeResult({ commit, dispatch }, resultID) {
       commit('removeResult', resultID);
