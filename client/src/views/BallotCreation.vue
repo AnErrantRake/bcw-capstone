@@ -13,7 +13,7 @@
     </div>
 
 
-    <div class="row ">
+    <div class="row">
       <div v-show="searching" v-if="byCoordinates" class="col-12">
         <search-coords></search-coords>
       </div>

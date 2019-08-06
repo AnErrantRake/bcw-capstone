@@ -3,29 +3,29 @@
     <form @submit.prevent="searchByLocation">
       <div class="row mt-1">
         <label class="col-5" for="addressLine1">Line 1</label>
-        <input class="col" id="addressLine1" type="text" placeholder="700 W Jefferson St" v-model="address.line1"
+        <input class="col mr-2" id="addressLine1" type="text" placeholder="700 W Jefferson St" v-model="address.line1"
           required>
       </div>
       <div class="row mt-1">
         <label class="col-5" for="addressLine2">Line 2</label>
-        <input class="col" id="addressLine2" type="text" placeholder="Apt, Suite, etc" v-model="address.line2">
+        <input class="col mr-2" id="addressLine2" type="text" placeholder="Apt, Suite, etc" v-model="address.line2">
       </div>
       <div class="row mt-1">
         <label class="col-5" for="addressCityState">City, State</label>
-        <input class="col" id="addressCityState" type="text" placeholder="Boise, ID" v-model="address.citystate"
+        <input class="col mr-2" id="addressCityState" type="text" placeholder="Boise, ID" v-model="address.citystate"
           required>
       </div>
       <div class="row mt-1">
         <label class="col-5" for="addressZip">Zip Code</label>
-        <input class="col" id="addressZip" type="text" placeholder="83720" v-model="address.zip" required>
+        <input class="col mr-2" id="addressZip" type="text" placeholder="83720" v-model="address.zip" required>
       </div>
       <div class="row mt-1">
         <label class="col-5" for="locationRadius">Radius (mi)</label>
-        <input class="col" id="locationRadius" type="number" placeholder="radius" v-model="radiusInMiles" required>
+        <input class="col mr-2" id="locationRadius" type="number" placeholder="radius" v-model="radiusInMiles" required>
       </div>
       <div class="row mt-1">
         <label class="col-5" for="locationQuery">Query</label>
-        <input class="col" id="locationQuery" type="text" placeholder="optional" v-model="location.query">
+        <input class="col mr-2" id="locationQuery" type="text" placeholder="optional" v-model="location.query">
       </div>
       <div class="row mt-1">
         <div class="col"><button class="btn btn-success" type="submit">Search Local Restaurants</button></div>
