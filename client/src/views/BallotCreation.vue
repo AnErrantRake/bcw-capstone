@@ -87,6 +87,7 @@
           name: '',
           noms: []
         };
+        this.$store.dispatch('resetSearchResults')
         this.$router.push({ name: 'home' });
       },
       addNom() {
