@@ -1,8 +1,6 @@
 <template>
-  <drag class="searchResult" :transfer-data="result">
-    <p>{{result.name}}</p>
-    <p>{{result.vicinity}}</p>
-    <p>{{result.rating}}</p>
+  <drag class="searchResult card mt-1" style="width:100%" :transfer-data="result">
+    <span>{{result.name}}</span>
   </drag>
 </template>
 

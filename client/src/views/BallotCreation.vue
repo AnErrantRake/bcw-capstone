@@ -1,26 +1,19 @@
 <template>
   <div class="ballotCreation container-fluid">
-    <div class="row">
+    <div class="row m-2">
       <div class="col-6">
-        <div class="btn-group btn-group-toggle" data-toggle="buttons">
-          <label @click="showCoordinateSearch" class="btn btn-secondary active">
-            <input type="radio" name="search" id="option1" autocomplete="off" checked> Search By Coordinates
-          </label>
-          <label @click="showAddressSearch" class="btn btn-secondary">
-            <input type="radio" name="search" id="option2" autocomplete="off"> Search By Address
-          </label>
-        </div>
+        <button @click="showCoordinateSearch" class="btn btn-secondary btn-fluid p-1">
+          Search By Coordinates
+        </button>
+      </div>
+      <div class="col-6">
+        <button @click="showAddressSearch" class="btn btn-secondary btn-fluid p-1"> Search By Address
+        </button>
       </div>
     </div>
-    <div class="row">
-      <div class="col-6">
-        <form @submit.prevent="addNom">
-          <input type="text" placeholder="Restaurant Name" v-model='newRestaurant' required>
-          <button class="btn btn-success" type="submit">Add Restaurant</button>
-        </form>
-      </div>
-    </div>
-    <div class="row">
+
+
+    <div class="row ">
       <div v-show="searching" v-if="byCoordinates" class="col-12">
         <search-coords></search-coords>
       </div>
@@ -28,25 +21,58 @@
         <search-address></search-address>
       </div>
     </div>
+
+
+    <div class="row mt-2 justify-content-center">
+      <form @submit.prevent="addNom">
+        <div class="col-12 d-flex justify-content-center my-1">
+          <input type="text" placeholder="Custom Entry" v-model='newRestaurant' required></div>
+        <div class="col-12 d-flex justify-content-center  my-1">
+          <button class="btn btn-success btn-sm" type="submit">Add Restaurant</button></div>
+      </form>
+    </div>
+
     <div class="row">
-      <div class="col-6">
-        <h3 v-show="searchResults.length > 0">Suggestions:</h3>
-        <search-result v-for="result in searchResults" :result="result" :key="result.id"></search-result>
+      <div class="col-6 ">
+        <div class="row">
+          <div class="col">
+            <h5 v-show="searchResults.length > 0">Suggestions:</h5>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col">
+            <search-result v-for="result in searchResults" :result="result" :key="result.id"></search-result>
+          </div>
+        </div>
       </div>
-      <drop class="col-6" @drop="moveNom">
-        <h3>Added:</h3>
-        <ul>
-          <li v-for="(nom, index) in newBallot.noms">{{nom}} <button class="btn btn-sm btn-warning"
-              @click="removeNom(index)">Remove</button></li>
-        </ul>
+
+      <drop class="col-6 " @drop="moveNom">
+        <div class="row">
+          <div class="col">
+            <h5>Added:</h5>
+          </div>
+        </div>
+        <div class="row my-1" v-for="(nom, index) in newBallot.noms">
+
+          <div class="col-sm-8 col-8 p-1 card">
+            {{nom}}
+          </div>
+          <div class="col-4"><button class="btn btn-sm btn-warning" @click="removeNom(index)">
+              <i class="fas fa-trash"></i>
+            </button></div>
+
+
+        </div>
       </drop>
     </div>
-    <div class="row justify-content-center">
+
+
+    <div class="row mt-2 justify-content-center">
       <form @submit.prevent="addBallot">
-        <div class="col-12 d-flex justify-content-center">
+        <div class="col-12 d-flex justify-content-center mt-1">
           <input type="text" placeholder="Ballot Name" v-model='newBallot.name' required>
         </div>
-        <div class="col-12 d-flex justify-content-center">
+        <div class="col-12 d-flex justify-content-center my-1">
           <button class="btn btn-success" type="submit">Add Ballot</button>
         </div>
       </form>

@@ -54,7 +54,8 @@
         <div class="col">
           <button @click="setActiveBallot(ballot)" data-toggle="modal" data-target="#dateModal"
             class="btn btn-primary btn-sm mx-1" type="submit">Start</button>
-          <button @click="deleteBallot(ballot._id)" class="btn btn-danger btn-sm" type="submit">Delete</button>
+          <button @click="deleteBallot(ballot._id)" class="btn btn-danger btn-sm" type="submit"><i
+              class="fas fa-trash"></i></button>
         </div>
       </div>
     </div>
@@ -69,7 +70,8 @@
           class="col-5 col-sm-8 col-md-9 col-lg-10">{{election.pin}}</router-link>
         <div class="col">
           <button @click="getElection(election.pin)" class="btn btn-primary btn-sm mx-1" type="submit">Vote</button>
-          <button @click="deleteElection(election._id)" class="btn btn-danger btn-sm" type="submit">Delete</button>
+          <button @click="deleteElection(election._id)" class="btn btn-danger btn-sm" type="submit"><i
+              class="fas fa-trash"></i></button>
         </div>
       </div>
     </div>
@@ -83,7 +85,8 @@
         <router-link :to="{name: 'electionStatus', params:{electionID: election._id}}"
           class="col-5 col-sm-8 col-md-9 col-lg-10">{{election.pin}}</router-link>
         <div class="col">
-          <button @click="deleteElection(election._id)" class="btn btn-danger btn-sm" type="submit">Delete</button>
+          <button @click="deleteElection(election._id)" class="btn btn-danger btn-sm" type="submit"><i
+              class="fas fa-trash"></i></button>
         </div>
       </div>
     </div>
