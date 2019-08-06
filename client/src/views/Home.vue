@@ -26,22 +26,14 @@
               </div>
             </div>
           </div>
-          <div class="modal-footer">
-<<<<<<< HEAD
+          <div class="modal-footer">z
             <button @click="startElection" class="btn btn-primary" type="submit" data-dismiss="modal">
               Start Election
-=======
-            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-            <button @click="startElection" class="btn btn-primary" type="submit" data-dismiss="modal">
-              Start
-              Election
->>>>>>> 1067eb8df3cf256cbcd1b9364783804747033cc6
             </button>
           </div>
         </div>
       </div>
     </div>
-<<<<<<< HEAD
     <div class="border  mt-3">
       <div class="row text-center">
         <div class="col my-1">
@@ -95,34 +87,6 @@
         </div>
       </div>
     </div>
-=======
-    <div class="row text-center">
-      <div class="col-12 mt-3 mb-3">
-        <h1>Welcome to WFL!</h1>
-      </div>
-      <div class="col-12 mb-3">
-        <router-link class="btn btn-primary" :to="{name: 'ballotCreation'}">Create a new WFL</router-link>
-      </div>
-      <div class="col-12">
-        <h3 id="start">Start a WFL</h3>
-      </div>
-    </div>
-    <ul>
-      <li v-for="ballot in ballots">
-        <router-link :to="{name: 'ballot', params:{ballotID: ballot._id}}">{{ballot.name}}</router-link>
-        <button @click="setActiveBallot(ballot)" data-toggle="modal" data-target="#dateModal" class="btn btn-primary"
-          type="submit">Start</button>
-        <button @click="deleteBallot(ballot._id)" class="btn btn-danger" type="submit">Delete</button>
-      </li>
-    </ul>
-    <h1 id="active">Elections</h1>
-    <ul>
-      <li v-for="election in elections">
-        <router-link :to="{name: 'electionStatus', params:{electionID: election._id}}">{{election.pin}}</router-link>
-        <button @click="deleteElection(election._id)" class="btn btn-danger" type="submit">Delete</button>
-      </li>
-    </ul>
->>>>>>> 1067eb8df3cf256cbcd1b9364783804747033cc6
   </div>
 </template>
 
@@ -177,7 +141,6 @@
           ballotID: this.activeBallot._id,
           timeoutEpoch: timeout.valueOf()
         };
-<<<<<<< HEAD
 
         this.$store.dispatch("startElection", election);
       },
@@ -187,10 +150,6 @@
       },
       getElection(pin) {
         this.$store.dispatch('getElectionByPin', pin);
-=======
-
-        this.$store.dispatch("startElection", election);
->>>>>>> 1067eb8df3cf256cbcd1b9364783804747033cc6
       }
     },
     components: {}
