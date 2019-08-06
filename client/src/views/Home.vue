@@ -76,7 +76,7 @@
     <div class="border  my-3">
       <div class="row">
         <div class="col">
-          <h3 id="active" class="text-center">Eaten WaFLs</h3>
+          <h3 id="active" class="text-center">Stale WaFLs</h3>
         </div>
       </div>
       <div class="row m-2" v-for="election in elections" v-if="!isActive(election)">

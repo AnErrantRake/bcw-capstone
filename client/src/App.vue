@@ -1,12 +1,12 @@
 <template>
   <div id="app">
     <nav class="navbar navbar-expand-lg navbar-dark bg-primary" id="navbar">
-      <router-link v-if="user._id" class="navbar-brand text-center" :to="{name: 'home'}">
+      <router-link v-if="user._id" class="navbar-brand" :to="{name: 'home'}">
         <svg viewBox="0 0 100 100">
           <use xlink:href=".\assets\waffle.svg#Capa_1" class="logo"></use>
         </svg>
         WaFL </router-link>
-      <span v-else class="navbar-brand text-center">
+      <span v-else class="navbar-brand">
         <svg viewBox="0 0 100 100">
           <use xlink:href=".\assets\waffle.svg#Capa_1" class="logo"></use>
         </svg>
@@ -16,7 +16,7 @@
         aria-label="Toggle navigation">
         <span class="navbar-toggler-icon text-white"></span>
       </button>
-      <div v-if="user._id" class="collapse navbar-collapse" id="navbarSupportedContent">
+      <div v-if="user._id" class="collapse navbar-collapse " id="navbarSupportedContent">
         <ul class="navbar-nav mr-auto text-right">
           <li class="nav-item active">
             <router-link :to="{name:'home'}" class="nav-link">Home</router-link>
