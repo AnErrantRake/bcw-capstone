@@ -36,41 +36,35 @@
       <div class="col-6 ">
         <div class="row">
           <div class="col">
-            <h5 v-show="searchResults.length > 0">Suggestions:</h5>
+            <h5 v-show="searchResults.length > 0">Places:</h5>
           </div>
         </div>
-        <div class="row">
-          <div class="col">
-            <search-result v-for="result in searchResults" :result="result" :key="result.id"></search-result>
+        <div class="row" v-for="result in searchResults" :key="result.id" @click="moveNom(result)">
+          <div class="col p-1 m-1 mr-1 card">
+            <span>{{result.name}}</span><span class=""><i class="fas fa-arrow-right"></i></span>
           </div>
         </div>
       </div>
 
-      <drop class="col-6 " @drop="moveNom">
+      <div class="col-6 border-left">
         <div class="row">
           <div class="col">
             <h5>Added:</h5>
           </div>
         </div>
-        <div class="row my-1" v-for="(nom, index) in newBallot.noms">
-
-          <div class="col-sm-8 col-8 p-1 card">
-            {{nom}}
+        <div class="row" v-for="(nom, index) in newBallot.noms" @click="removeNom(index)">
+          <div class="col p-1 m-1 ml-3 card">
+            <span>{{nom}}</span><span><i class="far fa-times-circle"></i></span>
           </div>
-          <div class="col-4"><button class="btn btn-sm btn-warning" @click="removeNom(index)">
-              <i class="fas fa-trash"></i>
-            </button></div>
-
-
         </div>
-      </drop>
+      </div>
     </div>
 
 
     <div class="row mt-2 justify-content-center">
       <form @submit.prevent="addBallot">
         <div class="col-12 d-flex justify-content-center mt-1">
-          <input type="text" placeholder="Ballot Name" v-model='newBallot.name' required>
+          <input type="text" placeholder="Ballot Name" v-model='newBallot.name' maxlength="25" required />
         </div>
         <div class="col-12 d-flex justify-content-center my-1">
           <button class="btn btn-success" type="submit">Add Ballot</button>
@@ -82,10 +76,8 @@
 
 
 <script>
-  import SearchResult from '@/components/SearchResult.vue'
   import SearchByCoords from '@/components/SearchByCoords.vue'
   import SearchByAddress from '@/components/SearchByAddress.vue'
-  import { Drop, Drag } from 'vue-drag-drop' // needs both to compile
 
   export default {
     name: 'ballotCreation',
@@ -120,8 +112,11 @@
         this.newRestaurant = '';
       },
       moveNom(receivedNom) {
-        this.newBallot.noms.push(receivedNom.name);
-        this.$store.dispatch('removeResult', receivedNom.id);
+        let index = this.newBallot.noms.findIndex(el => el == receivedNom.name)
+
+        if (index == -1) {
+          this.newBallot.noms.push(receivedNom.name);
+        }
       },
       removeNom(index) {
         this.newBallot.noms.splice(index, 1)
@@ -150,10 +145,8 @@
       }
     },
     components: {
-      'search-result': SearchResult,
       'search-coords': SearchByCoords,
-      'search-address': SearchByAddress,
-      Drop
+      'search-address': SearchByAddress
     }
 
   }

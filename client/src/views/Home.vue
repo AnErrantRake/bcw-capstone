@@ -53,7 +53,7 @@
         </div>
         <div class="col">
           <button @click="setActiveBallot(ballot)" data-toggle="modal" data-target="#dateModal"
-            class="btn btn-primary btn-sm mx-1" type="submit">Start</button>
+            class="btn btn-primary btn-sm mx-1" type="submit">Batter</button>
           <button @click="deleteBallot(ballot._id)" class="btn btn-danger btn-sm" type="submit"><i
               class="fas fa-trash"></i></button>
         </div>
@@ -67,7 +67,8 @@
       </div>
       <div class="row m-2" v-for="election in elections" v-if="isActive(election)">
         <router-link :to="{name: 'electionStatus', params:{electionID: election._id}}"
-          class="col-5 col-sm-8 col-md-9 col-lg-10">{{election.pin}}</router-link>
+          class="col-5 col-sm-8 col-md-9 col-lg-10">{{election.pin}} - {{ getTemplateNameByElection(election) }}
+        </router-link>
         <div class="col">
           <button @click="getElection(election.pin)" class="btn btn-primary btn-sm mx-1" type="submit">Vote</button>
           <button @click="deleteElection(election._id)" class="btn btn-danger btn-sm" type="submit"><i
@@ -83,7 +84,9 @@
       </div>
       <div class="row m-2" v-for="election in elections" v-if="!isActive(election)">
         <router-link :to="{name: 'electionStatus', params:{electionID: election._id}}"
-          class="col-5 col-sm-8 col-md-9 col-lg-10">{{election.pin}}</router-link>
+          class="col-5 col-sm-8 col-md-9 col-lg-10">{{election.pin}} - <winner-display :votes="election.votes">
+          </winner-display>
+        </router-link>
         <div class="col">
           <button @click="deleteElection(election._id)" class="btn btn-danger btn-sm" type="submit"><i
               class="fas fa-trash"></i></button>
@@ -96,6 +99,7 @@
 
 <script>
   import moment from "moment";
+  import WinnerDisplay from "../components/WinnerDisplay.vue"
 
   export default {
     name: "home",
@@ -153,9 +157,20 @@
       },
       getElection(pin) {
         this.$store.dispatch('getElectionByPin', pin);
+      },
+      getTemplateNameByElection(election) {
+
+        let ballot = this.$store.state.ballots.find(el => el._id == election.ballotID)
+        if (ballot)
+          return ballot.name
+        else
+          return ""
       }
     },
-    components: {}
+    components: {
+
+      'winner-display': WinnerDisplay,
+    }
   };
 </script>
 
