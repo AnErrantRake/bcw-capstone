@@ -49,8 +49,8 @@ export default class SearchController {
       // construct query parameters
       let query = {
         location: reqLocation,
-        radius: req.query.radius,
-        type: 'restaurant'
+        type: 'restaurant',
+        rankby: 'distance'
       }
       // handle optional queries
       if (req.query.keyword) {
