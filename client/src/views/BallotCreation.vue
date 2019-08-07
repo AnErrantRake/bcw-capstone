@@ -41,7 +41,7 @@
         </div>
         <div class="row" v-for="result in searchResults" :key="result.id" @click="moveNom(result)">
           <div class="col p-1 m-1 mr-1 card">
-            <span>{{result.name}}</span>
+            <span>{{result.name}}</span><span class=""><i class="fas fa-arrow-right"></i></span>
           </div>
         </div>
       </div>
@@ -54,7 +54,7 @@
         </div>
         <div class="row" v-for="(nom, index) in newBallot.noms" @click="removeNom(index)">
           <div class="col p-1 m-1 ml-3 card">
-            <span>{{nom}}</span>
+            <span>{{nom}}</span><span><i class="far fa-times-circle"></i></span>
           </div>
         </div>
       </div>
@@ -64,7 +64,7 @@
     <div class="row mt-2 justify-content-center">
       <form @submit.prevent="addBallot">
         <div class="col-12 d-flex justify-content-center mt-1">
-          <input type="text" placeholder="Ballot Name" v-model='newBallot.name' required>
+          <input type="text" placeholder="Ballot Name" v-model='newBallot.name' maxlength="25" required />
         </div>
         <div class="col-12 d-flex justify-content-center my-1">
           <button class="btn btn-success" type="submit">Add Ballot</button>
