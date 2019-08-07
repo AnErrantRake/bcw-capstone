@@ -84,7 +84,9 @@
       </div>
       <div class="row m-2" v-for="election in elections" v-if="!isActive(election)">
         <router-link :to="{name: 'electionStatus', params:{electionID: election._id}}"
-          class="col-5 col-sm-8 col-md-9 col-lg-10">{{election.pin}}</router-link>
+          class="col-5 col-sm-8 col-md-9 col-lg-10">{{election.pin}} - <winner-display :votes="election.votes">
+          </winner-display>
+        </router-link>
         <div class="col">
           <button @click="deleteElection(election._id)" class="btn btn-danger btn-sm" type="submit"><i
               class="fas fa-trash"></i></button>
@@ -97,6 +99,7 @@
 
 <script>
   import moment from "moment";
+  import WinnerDisplay from "../components/WinnerDisplay.vue"
 
   export default {
     name: "home",
@@ -164,7 +167,10 @@
           return ""
       }
     },
-    components: {}
+    components: {
+
+      'winner-display': WinnerDisplay,
+    }
   };
 </script>
 
