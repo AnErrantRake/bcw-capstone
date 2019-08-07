@@ -1,16 +1,16 @@
 <template>
   <div id="app">
     <nav class="navbar navbar-expand-lg navbar-dark bg-primary" id="navbar">
-      <router-link v-if="user._id" class="navbar-brand" :to="{name: 'home'}">
+      <router-link v-if="user._id" class="navbar-brand pr-5" :to="{name: 'home'}">
         <svg viewBox="0 0 100 100">
           <use xlink:href=".\assets\waffle.svg#Capa_1" class="logo"></use>
         </svg>
-        WaFL </router-link>
-      <span v-else class="navbar-brand">
+        <span class="pl-3">WaFL</span> </router-link>
+      <span v-else class="navbar-brand pr-5">
         <svg viewBox="0 0 100 100">
           <use xlink:href=".\assets\waffle.svg#Capa_1" class="logo"></use>
         </svg>
-        WaFL </span>
+        <span class="pl-3">WaFL</span> </span>
       <button v-if="user._id" class="navbar-toggler" type="button" data-toggle="collapse"
         data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false"
         aria-label="Toggle navigation">
