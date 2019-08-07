@@ -1,17 +1,36 @@
 <template>
   <div class="search-coords">
     <form @submit.prevent="searchByLocation">
-      <label for="locationLatitude">Latitude</label>
-      <input id="locationLatitude" type="number" placeholder="lat" v-model="location.latitude" min="-90" max="90"
-        step="0.000000000000001" required>
-      <label for="locationLongitude">Longitude</label>
-      <input id="locationLongitude" type="number" placeholder="long" v-model="location.longitude" min="-180" max="180"
-        step="0.000000000000001" required>
-      <label for="locationRadius">Radius (mi)</label>
-      <input id="locationRadius" type="number" placeholder="radius" v-model="radiusInMiles" required>
-      <label for="locationQuery">Query</label>
-      <input id="locationQuery" type="text" placeholder="optional" v-model="location.query">
-      <button class="btn btn-success" type="submit">Search Local Restaurants</button>
+      <div class="row mt-1">
+        <div class="col-5">
+          <label for="locationLatitude">Latitude</label>
+        </div>
+
+        <input class="col mr-2" id="locationLatitude" type="number" placeholder="lat" v-model="location.latitude"
+          min="-90" max="90" step="0.000000000000001" required>
+      </div>
+
+      <div class="row mt-1">
+        <div class="col-5"><label for="locationLongitude">Longitude</label></div>
+        <input class="col mr-2" id="locationLongitude" type="number" placeholder="long" v-model="location.longitude"
+          min="-180" max="180" step="0.000000000000001" required>
+      </div>
+
+      <div class="row mt-1">
+        <div class="col-5"><label for="locationRadius">Radius (mi)</label></div>
+        <input class="col mr-2" id="locationRadius" type="number" placeholder="radius" v-model="radiusInMiles" required>
+
+      </div>
+
+      <div class="row mt-1">
+        <div class="col-5">
+          <label for="locationQuery">Query</label></div>
+        <input class="col mr-2" id="locationQuery" type="text" placeholder="optional" v-model="location.query">
+      </div>
+      <div class="row mt-1">
+        <button class="btn btn-success" type="submit">Search Local Restaurants</button></div>
+
+
     </form>
   </div>
 </template>
