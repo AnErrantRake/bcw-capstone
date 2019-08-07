@@ -1,23 +1,28 @@
 <template>
-  <div class="login">
-    <form v-if="loginForm" @submit.prevent="loginUser">
+  <div class="login mt-4">
+    <h3 class="text-center">Joining a WaFL?</h3>
+    <form class="ml-1" @submit.prevent="getElection">
+      <input type="text" v-model="pin" placeholder="enter pin here" />
+      <button class="btn btn-success  btn-sm mb-1 mx-1" type="submit">What's for Lunch?</button>
+    </form>
+    <br>
+    <h3 class="text-center">Creating a WaFL?</h3>
+    <form class="ml-1" v-if="loginForm" @submit.prevent="loginUser">
       <input type="text" v-model="creds.username" placeholder="Enter your name" />
       <input type="password" v-model="creds.password" placeholder="password" />
-      <button class="btn btn-success" type="submit">Login</button>
+      <button class="btn btn-primary btn-sm mb-1 mx-1" type="submit">Login</button>
     </form>
-    <form v-else @submit.prevent="register">
-      <input type="text" v-model="newUser.username" placeholder="name" />
+    <form class="ml-1" v-else @submit.prevent="register">
+      <input type="text" v-model="newUser.username" placeholder="name" class="mr-1" />
       <input type="password" v-model="newUser.password" placeholder="password" />
-      <button class="btn btn-warning" type="submit">Create Account</button>
+      <button class="btn btn-primary  btn-sm mb-1 mx-1" type="submit">Create Account</button>
     </form>
-    <div class="action" @click="loginForm = !loginForm">
-      <p v-if="loginForm">No account? Click here to Register</p>
-      <p v-else>Already have an account? Click here to Login</p>
+
+    <div class="action mt-2" @click="loginForm = !loginForm">
+      <p v-if="loginForm"> No account? Click <span class="text-primary">here</span> to
+        Register</p>
+      <p v-else>Already have an account? Click <span class="text-primary">here</span> to Login</p>
     </div>
-    <form @submit.prevent="getElection">
-      <input type="text" v-model="pin" placeholder="pin" />
-      <button class="btn btn-success" type="submit">What's for Lunch?</button>
-    </form>
   </div>
 </template>
 

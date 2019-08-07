@@ -1,7 +1,7 @@
 <template>
-  <div class="winnerDisplay">
-    <h3>Winner: {{bordaEval}}</h3>
-  </div>
+  <span class="winnerDisplay">
+    {{bordaEval}}
+  </span>
 </template>
 
 

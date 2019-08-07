@@ -1,27 +1,52 @@
 <template>
-  <div class="election">
-    <p>Pin: {{election.pin}}</p>
-    <countdown-timer :endTime="election.timeoutEpoch"></countdown-timer>
-    <div v-if="election.timeoutEpoch > Date.now()">
-      <div v-if="hasName">
-        <h3>Name: {{name}}</h3>
-        <h3>Options:</h3>
-        <draggable :list="election.ballotID.noms" :disabled="!enabled" class="list-group" ghost-class="ghost"
-          @start="dragging = true" @end="dragging = false">
-          <div class="list-group-item" v-for="candidate in election.ballotID.noms" :key="candidate">{{ candidate }}
-          </div>
-        </draggable>
-        <div class="btn btn-primary" @click="submitVotes">Submit</div>
+  <div class="election container-fluid">
+    <div class="row mt-3">
+      <div class="col">
+        <h2>Pin: {{election.pin}}</h2>
+      </div>
+    </div>
+
+    <div class="row my-3">
+      <div class="col">
+        <countdown-timer :endTime="election.timeoutEpoch"></countdown-timer>
+      </div>
+    </div>
+
+    <div v-if="voted">
+      <!-- this region for the voter status page -->
+      <p>Number of votes: {{ election.votes.length }} </p>
+      <div v-if="election.timeoutEpoch > Date.now()">
+        <p>Current Winner: <winner-display :votes="election.votes"></winner-display>
+        </p>
       </div>
       <div v-else>
-        <form @submit.prevent="addName">
-          <input type="text" placeholder="Your Name" v-model='name' required>
-          <button class="btn btn-success" type="submit">Continue</button>
-        </form>
+        <p>Voting closed! Winner: <winner-display :votes="election.votes"></winner-display>
+        </p>
       </div>
     </div>
     <div v-else>
-      <winner-display :votes="election.votes"></winner-display>
+      <div v-if="election.timeoutEpoch > Date.now()">
+        <div v-if="hasName">
+          <h4>Name: {{name}}</h4>
+          <h4>Ranked Choices:</h4>
+          <draggable :list="election.ballotID.noms" :disabled="!enabled" class="list-group" ghost-class="ghost"
+            @start="dragging = true" @end="dragging = false">
+            <div class="list-group-item" v-for="candidate in election.ballotID.noms" :key="candidate">{{ candidate }}
+            </div>
+          </draggable>
+          <button class="btn btn-primary mt-3 text-right" @click="submitVotes">Submit</button>
+        </div>
+        <div v-else>
+          <form @submit.prevent="addName">
+            <input type="text" placeholder="Your Name" v-model='name' required>
+            <button class="btn btn-success" type="submit">Continue</button>
+          </form>
+        </div>
+      </div>
+      <div v-else>
+        <p>Winner is: <winner-display :votes="election.votes"></winner-display>
+        </p>
+      </div>
     </div>
   </div>
 </template>
@@ -40,11 +65,18 @@
         enabled: true,
         hasName: false,
         dragging: false,
-        name: ''
+        name: '',
+        voted: false
       };
     },
     mounted() {
-      this.$store.dispatch('getElectionByPin', this.electionPin)
+      this.$store.dispatch('getElectionByPin', this.electionPin);
+      this.$store.dispatch("joinRoom", this.election._id);
+
+      if (this.user.username) {
+        this.name = this.user.username
+        this.hasName = true
+      }
     },
     computed: {
       election() {
@@ -52,6 +84,9 @@
       },
       draggingInfo() {
         return this.dragging ? "under drag" : "";
+      },
+      user() {
+        return this.$store.state.user;
       }
     },
     methods: {
@@ -68,6 +103,7 @@
           output.voteValues[this.election.ballotID.noms[i]] = i + 1;
         }
         this.$store.dispatch("submitVotes", output);
+        this.voted = true
       }
     },
     components: {

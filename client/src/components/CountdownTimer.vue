@@ -1,11 +1,11 @@
 <template>
   <div class="countdown-timer">
     <div v-if="timeLeft">
-      <h2>{{countdown}} remaining</h2>
-      <h3>(ends at {{readableTime}})</h3>
+      <h3>{{countdown}} remaining</h3>
+      <h4>(ends at {{readableTime}})</h4>
     </div>
     <div v-else>
-      <h2>Voting has closed</h2>
+      <h3>Voting has closed</h3>
     </div>
   </div>
 </template>
@@ -26,7 +26,7 @@
     },
     created() {
       moment.relativeTimeThreshold('ss', 0);   // minimum # seconds for second display
-      moment.relativeTimeThreshold('s', 120);  // minimum # seconds for minute display
+      moment.relativeTimeThreshold('s', 15);  // minimum # seconds for minute display
       moment.relativeTimeThreshold('m', 50);   // minimum # minutes for hour display
       moment.relativeTimeThreshold('h', 18);   // minimum # hours for day display
       moment.relativeTimeThreshold('d', 22);   // minimum # days for month display
