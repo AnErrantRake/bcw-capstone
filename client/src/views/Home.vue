@@ -53,7 +53,7 @@
         </div>
         <div class="col">
           <button @click="setActiveBallot(ballot)" data-toggle="modal" data-target="#dateModal"
-            class="btn btn-primary btn-sm mx-1" type="submit">Start</button>
+            class="btn btn-primary btn-sm mx-1" type="submit">Batter</button>
           <button @click="deleteBallot(ballot._id)" class="btn btn-danger btn-sm" type="submit"><i
               class="fas fa-trash"></i></button>
         </div>
