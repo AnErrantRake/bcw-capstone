@@ -19,10 +19,7 @@
         <label class="col-5" for="addressZip">Zip Code</label>
         <input class="col mr-2" id="addressZip" type="text" placeholder="83720" v-model="address.zip" required>
       </div>
-      <div class="row mt-1">
-        <label class="col-5" for="locationRadius">Radius (mi)</label>
-        <input class="col mr-2" id="locationRadius" type="number" placeholder="radius" v-model="radiusInMiles" required>
-      </div>
+
       <div class="row mt-1">
         <label class="col-5" for="locationQuery">Query</label>
         <input class="col mr-2" id="locationQuery" type="text" placeholder="optional" v-model="location.query">
