@@ -210,12 +210,12 @@ export default new Vuex.Store({
 
     //#region -- Search --
     async searchByCoords({ commit, dispatch }, location) {
-      api.get(`search/google/?lat=${location.latitude}&lon=${location.longitude}&radius=${location.radius}&keyword=${location.query}`)
+      api.get(`search/google/?lat=${location.latitude}&lon=${location.longitude}&keyword=${location.query}`)
         .then(res => commit('setSearchResults', res.data))
         .catch(error => console.error(error));
     },
     async searchByAddress({ commit, dispatch }, location) {
-      api.get(`search/google/?address=${location.address}&radius=${location.radius}&keyword=${location.query}`)
+      api.get(`search/google/?address=${location.address}&keyword=${location.query}`)
         .then(res => commit('setSearchResults', res.data))
         .catch(error => console.error(error));
     },

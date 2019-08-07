@@ -17,12 +17,6 @@
       </div>
 
       <div class="row mt-1">
-        <div class="col-5"><label for="locationRadius">Radius (mi)</label></div>
-        <input class="col mr-2" id="locationRadius" type="number" placeholder="radius" v-model="radiusInMiles" required>
-
-      </div>
-
-      <div class="row mt-1">
         <div class="col-5">
           <label for="locationQuery">Query</label></div>
         <input class="col mr-2" id="locationQuery" type="text" placeholder="optional" v-model="location.query">
