@@ -1,6 +1,6 @@
 <template>
   <div class="election-menu">
-    <div class="border  mt-3">
+    <div class="border mt-3">
       <div class="row">
         <div class="col">
           <h3 class="text-center">Hot WaFLs</h3>
