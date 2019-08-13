@@ -70,10 +70,10 @@ export default {
     //     .then(res => commit('setActiveBallot', res.data))
     //     .catch(error => console.error(error));
     // },
-    async submitVotes({ commit, dispatch, state }, votes) {
+    async submitVotes({ commit, dispatch, state, rootState }, votes) {
       api.put('elections/vote/' + state.activeElection.pin, votes)
         .then(res => {
-          if (userStore.state.user._id) {
+          if (rootState.userStore.user._id) {
             router.push({ name: 'electionStatus', params: { electionID: state.activeElection._id } })
           }
         })
