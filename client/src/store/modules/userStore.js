@@ -1,7 +1,6 @@
 import router from '../../router'
 import AuthService from '../../AuthService'
 
-
 export default {
   state: {
     user: {}

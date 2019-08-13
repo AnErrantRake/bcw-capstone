@@ -70,7 +70,7 @@
     },
     computed: {
       election() {
-        return this.$store.state.activeElection;
+        return this.$store.state.electionStore.activeElection;
       },
       draggingInfo() {
         return this.dragging ? "under drag" : "";

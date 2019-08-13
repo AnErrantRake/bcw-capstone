@@ -49,7 +49,7 @@
     },
     computed: {
       election() {
-        return this.$store.state.activeElection;
+        return this.$store.state.electionStore.activeElection;
       }
     },
     methods: {

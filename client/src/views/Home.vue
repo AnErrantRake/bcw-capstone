@@ -5,7 +5,6 @@
   </div>
 </template>
 
-
 <script>
   import BallotMenu from "../components/BallotMenu.vue"
   import ElectionMenu from "../components/ElectionMenu.vue"
@@ -22,10 +21,10 @@
     },
     computed: {
       ballots() {
-        return this.$store.state.ballots;
+        return this.$store.state.ballotStore.ballots;
       },
       elections() {
-        return this.$store.state.elections;
+        return this.$store.state.electionStore.elections;
       }
     },
     methods: {
