@@ -1,44 +1,34 @@
 import Vue from 'vue'
 import Vuex from 'vuex'
-import Axios from 'axios'
-import router from './router'
-import AuthService from './AuthService'
-import io from 'socket.io-client'
-
-let socket = {}
-
+import router from '../router'
+import socketStore from './modules/socketStore'
+import searchStore from './modules/searchStore'
+import userStore from './modules/userStore'
+import { api } from '../api/index'
 Vue.use(Vuex)
-//Allows axios to work locally or live
-let base = window.location.host.includes('localhost:8080') ? '//localhost:3000/' : 'https://bcw-capstone-wafl.herokuapp.com/'
-
-let api = Axios.create({
-  baseURL: base + "api/",
-  timeout: 3000,
-  withCredentials: true
-})
-
 
 export default new Vuex.Store({
+  modules: {
+    socketStore,
+    searchStore,
+    userStore
+  },
   state: {
-    user: {},
     ballots: [],
     elections: [],
     activeBallot: {},
-    activeElection: {},
-    searchResults: []
+    activeElection: {}
   },
   mutations: {
     //#region -- AUTH STUFF --
-    setUser(state, user) {
-      state.user = user
-    },
     resetState(state) {
-      state.user = {}
       state.ballots = []
       state.elections = []
       state.activeBallot = {}
       state.activeElection = {}
-      state.searchResults = []
+
+      state.userStore.user = {} //TODO verify me
+      state.searchStore.searchResults = [] //TODO verify me
     },
     //#endregion
 
@@ -74,58 +64,11 @@ export default new Vuex.Store({
       }
     },
     setActiveElection(state, election) {
-
       state.activeElection = election;
-    },
-    //#endregion
-
-    //#region -- Search --
-    setSearchResults(state, results) {
-      state.searchResults = results;
-    },
-    resetSearchResults(state, results) {
-      state.searchResults = [];
-    },
-    removeResult(state, resultID) {
-      let index = state.searchResults.findIndex(curr => curr.id === resultID);
-      if (index >= 0) {
-        state.searchResults.splice(index, 1);
-      }
     },
     //#endregion
   },
   actions: {
-    //#region -- AUTH STUFF --
-    async register({ commit, dispatch }, creds) {
-      try {
-        let user = await AuthService.Register(creds)
-        commit('setUser', user)
-        router.push({ name: "home" })
-      } catch (e) {
-        console.warn(e.message)
-      }
-    },
-    async login({ commit, dispatch }, creds) {
-      try {
-        let user = await AuthService.Login(creds)
-        commit('setUser', user)
-        router.push({ name: "home" })
-      } catch (e) {
-        console.warn(e.message)
-      }
-    },
-    async logout({ commit, dispatch }) {
-      try {
-        let success = await AuthService.Logout()
-        if (!success) { }
-        commit('resetState')
-        router.push({ name: "login" })
-      } catch (e) {
-        console.warn(e.message)
-      }
-    },
-    //#endregion
-
     //#region -- Ballots --
     async getBallots({ commit, dispatch }) {
       api.get('ballots')
@@ -200,56 +143,12 @@ export default new Vuex.Store({
     async submitVotes({ commit, dispatch, state }, votes) {
       api.put('elections/vote/' + state.activeElection.pin, votes)
         .then(res => {
-          if (state.user._id) {
+          if (userStore.state.user._id) {
             router.push({ name: 'electionStatus', params: { electionID: state.activeElection._id } })
           }
         })
         .catch(error => console.error(error));
     },
     //#endregion
-
-    //#region -- Search --
-    async searchByCoords({ commit, dispatch }, location) {
-      api.get(`search/google/?lat=${location.latitude}&lon=${location.longitude}&keyword=${location.query}`)
-        .then(res => commit('setSearchResults', res.data))
-        .catch(error => console.error(error));
-    },
-    async searchByAddress({ commit, dispatch }, location) {
-      api.get(`search/google/?address=${location.address}&keyword=${location.query}`)
-        .then(res => commit('setSearchResults', res.data))
-        .catch(error => console.error(error));
-    },
-    resetSearchResults({ commit, dispatch }) {
-      commit('resetSearchResults');
-    },
-    removeResult({ commit, dispatch }, resultID) {
-      commit('removeResult', resultID);
-    },
-    //#endregion
-
-    //#region -- Sockets --
-    initializeSocket({ commit, dispatch }) {
-      // establish socket connection
-      socket = io.connect(base)
-
-      // handle connection events
-      socket.on('CONNECTED', data => {
-        console.log('Connected to socket: ' + data.socket)
-      })
-
-      // register isteners
-      socket.on('addVote', data => {
-
-        commit('setActiveElection', data)
-      })
-    },
-    joinRoom({ commit, dispatch, state }, roomID) {
-      socket.emit('join', { roomID })
-    },
-    leaveRoom({ commit, dispatch, state }, roomID) {
-      socket.emit('leave', { roomID })
-    }
-    //#endregion
-
   }
 })

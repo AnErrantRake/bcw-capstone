@@ -76,7 +76,7 @@
         return this.dragging ? "under drag" : "";
       },
       user() {
-        return this.$store.state.user;
+        return this.$store.state.userStore.user;
       }
     },
     methods: {
