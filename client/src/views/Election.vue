@@ -5,18 +5,15 @@
         <h2>Pin: {{election.pin}}</h2>
       </div>
     </div>
-
     <div class="row my-3">
       <div class="col">
         <countdown-timer :endTime="election.timeoutEpoch"></countdown-timer>
       </div>
     </div>
-
     <div v-if="election.timeoutEpoch < Date.now()">
       <p>Voting closed! Winner: <winner-display :votes="election.votes"></winner-display>
       </p>
     </div>
-
     <div v-else>
       <div v-if="voted">
         <!-- this region for the voter status page -->
@@ -24,7 +21,6 @@
         <p>Current Winner: <winner-display :votes="election.votes"></winner-display>
         </p>
       </div>
-
       <form v-else @submit.prevent="submitVotes">
         <h4>Enter Name:</h4>
         <input type="text" placeholder="Your Name" v-model='name' required>
@@ -37,7 +33,6 @@
         <button class="btn btn-success" type="submit">Submit</button>
       </form>
     </div>
-
   </div>
 </template>
 

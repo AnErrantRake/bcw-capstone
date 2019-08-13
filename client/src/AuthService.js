@@ -1,5 +1,5 @@
 import Axios from 'axios'
-import { base } from './api/index'
+import { base } from './api/'
 
 let auth = Axios.create({
     baseURL: base + "account/",

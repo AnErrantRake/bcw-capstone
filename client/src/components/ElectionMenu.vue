@@ -59,9 +59,7 @@
       getElection(pin) {
         this.$store.dispatch('getElectionByPin', pin);
       },
-
       getTemplateNameByElection(election) {
-
         let ballot = this.$store.state.ballotStore.ballots.find(el => el._id == election.ballotID)
         if (ballot)
           return ballot.name

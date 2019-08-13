@@ -62,7 +62,6 @@
   </div>
 </template>
 
-
 <script>
   import moment from "moment";
   export default {
@@ -90,8 +89,6 @@
       deleteBallot(ballotID) {
         this.$store.dispatch("deleteBallot", ballotID);
       },
-
-
       startElection() {
         let timeout = moment(
           this.timestamp + " " + this.date,

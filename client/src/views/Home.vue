@@ -28,7 +28,6 @@
       }
     },
     methods: {
-
     },
     components: {
       'ballot-menu': BallotMenu,
