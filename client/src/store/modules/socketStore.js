@@ -1,7 +1,5 @@
 import io from 'socket.io-client'
-
-import { base, api } from '../../api/index'
-
+import { base } from '../../api/index'
 
 let socket = {};
 
