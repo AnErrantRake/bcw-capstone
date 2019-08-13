@@ -68,6 +68,9 @@
         this.hasName = true
       }
     },
+    beforeDestroy() {
+      this.$store.dispatch('leaveRoom', this.election._id)
+    },
     computed: {
       election() {
         return this.$store.state.electionStore.activeElection;
