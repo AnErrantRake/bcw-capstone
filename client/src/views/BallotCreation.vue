@@ -94,7 +94,7 @@
     },
     computed: {
       searchResults() {
-        return this.$store.state.searchResults;
+        return this.$store.state.searchStore.searchResults;
       }
     },
     methods: {

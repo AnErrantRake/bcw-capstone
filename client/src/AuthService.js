@@ -1,8 +1,8 @@
 import Axios from 'axios'
-let baseUrl = location.host.includes('localhost') ? '//localhost:3000/' : 'https://bcw-capstone-wafl.herokuapp.com/'
+import { base } from './api/'
 
 let auth = Axios.create({
-    baseURL: baseUrl + "account/",
+    baseURL: base + "account/",
     timeout: 3000,
     withCredentials: true
 })

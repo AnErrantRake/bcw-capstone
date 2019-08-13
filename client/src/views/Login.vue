@@ -46,7 +46,7 @@
       };
     },
     beforeCreate() {
-      if (this.$store.state.user._id) {
+      if (this.$store.state.userStore.user._id) {
         this.$router.push({ name: "home" });
       }
     },
