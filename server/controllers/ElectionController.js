@@ -93,7 +93,7 @@ export default class ElectionController {
     async updateElection(req, res, next) {
         try {
             let data = await _electionService.findOneAndUpdate({ _id: req.params.id }, req.body)
-            socket.notifyAddVote(data)
+            socket.notifyAddVote(req.body)
             return res.send(data)
         } catch (error) {
             next(error)
