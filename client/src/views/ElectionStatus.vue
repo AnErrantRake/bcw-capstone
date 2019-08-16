@@ -23,7 +23,8 @@
     </div>
     <div class="row" v-for="vote in election.votes">
       <div class="col"><span>{{vote.name}}</span></div>
-      <div class="col-3"><button class="btn btn-danger" @click="removeVote(vote)">GARBAGE</button></div>
+      <div class="col-3"><button class="btn btn-danger" @click="removeVote(vote)"><i class="fas fa-trash"></i></button>
+      </div>
     </div>
 
   </div>
