@@ -2,12 +2,12 @@
   <div class="ballotCreation container-fluid">
     <div class="row m-2">
       <div class="col-6">
-        <button @click="showCoordinateSearch" class="btn btn-secondary btn-fluid p-1">
-          Search By Coordinates
+        <button @click="searchByLocation" class="btn btn-secondary btn-fluid p-1">
+          Search by My Location
         </button>
       </div>
       <div class="col-6">
-        <button @click="showAddressSearch" class="btn btn-secondary btn-fluid p-1"> Search By Address
+        <button @click="showAddressSearch" class="btn btn-secondary btn-fluid p-1"> Search By Custom Address
         </button>
       </div>
     </div>
@@ -90,6 +90,12 @@
         searching: false,
         byCoordinates: true,
         newRestaurant: '',
+        location: {
+          address: '',
+          latitude: 0,
+          longitude: 0,
+          query: ''
+        }
       }
     },
     computed: {
@@ -97,15 +103,32 @@
         return this.$store.state.searchStore.searchResults;
       }
     },
+    mounted() {      // get location from browser
+      if (navigator.geolocation) {
+        navigator.geolocation.getCurrentPosition(
+          position => {
+            this.location.latitude = position.coords.latitude
+            this.location.longitude = position.coords.longitude
+          },
+          () => console.error('Unable to retrieve location from browser'));
+      } else {
+        console.log('Geolocation is not supported by your browser')
+      }
+    },
     methods: {
       addBallot() {
-        this.$store.dispatch('addBallot', this.newBallot);
-        this.newBallot = {
-          name: '',
-          noms: []
-        };
-        this.$store.dispatch('resetSearchResults')
-        this.$router.push({ name: 'home' });
+        if (this.newBallot.noms.length > 1) {
+          this.$store.dispatch('addBallot', this.newBallot);
+          this.newBallot = {
+            name: '',
+            noms: []
+          };
+          this.$store.dispatch('resetSearchResults')
+          this.$router.push({ name: 'home' });
+        }
+        else {
+          console.log("Error Creating Ballot!")
+        }
       },
       addNom() {
         this.newBallot.noms.push(this.newRestaurant);
@@ -142,6 +165,11 @@
         // always searching
         this.searching = true;
         this.byCoordinates = false;
+      },
+      searchByLocation() {
+        // convert miles to meters for radius output
+        this.location.radius = Math.ceil(this.radiusInMiles * 1609.344);
+        this.$store.dispatch('searchByCoords', this.location);
       }
     },
     components: {

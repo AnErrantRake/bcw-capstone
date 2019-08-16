@@ -79,5 +79,9 @@ export default {
         })
         .catch(error => console.error(error));
     },
+    async updateElection({ commit, dispatch, state, rootState }, election) {
+      api.put('elections/' + election._id, election)
+        .catch(error => console.error(error));
+    }
   }
 }

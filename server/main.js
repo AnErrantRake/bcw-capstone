@@ -24,7 +24,7 @@ var port = process.env.PORT
 server.use(express.static(__dirname + '/../client/dist'))
 
 
-var whitelist = ['http://localhost:8080', 'https://bcw-capstone-wafl.herokuapp.com/'];
+var whitelist = ['http://localhost:8080', 'https://wafl.herokuapp.com/'];
 var corsOptions = {
   origin: function (origin, callback) {
     var originIsWhitelisted = whitelist.indexOf(origin) !== -1;
