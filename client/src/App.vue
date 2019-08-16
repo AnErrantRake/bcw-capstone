@@ -26,7 +26,7 @@
         <span class="navbar-toggler-icon text-white"></span>
       </button>
       <div v-if="user._id" class="collapse navbar-collapse" id="navbarSupportedContent">
-        <ul class="navbar-nav mr-auto text-right">
+        <ul class="navbar-nav mx-2 text-right">
           <li class="nav-item active">
             <router-link :to="{name:'home'}" class="nav-link">Home</router-link>
           </li>
