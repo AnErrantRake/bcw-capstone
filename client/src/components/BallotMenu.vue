@@ -104,7 +104,7 @@
         this.$store.dispatch("startElection", election);
       },
       checkSafeDelete(id) {
-        return ((this.$store.state.electionStore.elections.findIndex(el => el.ballotID == id) == -1));
+        return (this.$store.state.electionStore.elections.findIndex(el => el.ballotID == id) == -1);
       }
     },
     components: {}
