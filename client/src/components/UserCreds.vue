@@ -6,6 +6,9 @@
       <div class="row justify-content-center">
         <input id="inputUsername" class="col-12" type="text" pattern="[A-Za-z0-9]{1,}$" v-model="creds.username"
           placeholder="name" required />
+        <small v-show="isDuplicate" class="form-text text-danger">
+          Username is already in use.
+        </small>
         <input class="col-12" type="password" minlength=6 v-model="creds.password" placeholder="password" required />
         <button class="col-12 btn btn-success btn-sm" type="submit">{{registering ? 'Create' : 'Login'}}</button>
       </div>
@@ -26,7 +29,11 @@
         },
       }
     },
-    computed: {},
+    computed: {
+      isDuplicate() {
+        return this.$store.state.userStore.duplicateUserName;
+      }
+    },
     methods: {
       submitCreds() {
         if (this.registering) {

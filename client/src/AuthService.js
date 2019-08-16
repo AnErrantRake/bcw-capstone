@@ -13,7 +13,7 @@ export default class AuthService {
             let res = await auth.post('login', creds)
             return res.data
         } catch (e) {
-            throw new Error(`[login failed] : ${!e.response ? 'No response from server' : e.response.data.error}`)
+            throw new Error(`[login failed] : ${!e.response ? 'No response from server' : e.response.data.errmsg}`)
         }
     }
     static async Register(creds) {
@@ -21,7 +21,8 @@ export default class AuthService {
             let res = await auth.post('register', creds)
             return res.data
         } catch (e) {
-            throw new Error(`[registration failed] : ${!e.response ? 'No response from server' : e.response.data.error}`)
+            // handle duplicate entries
+            throw new Error(`[registration failed] : ${!e.response ? 'No response from server' : e.response.data.errmsg}`)
         }
     }
     static async Logout() {
@@ -29,7 +30,7 @@ export default class AuthService {
             let res = await auth.delete('logout')
             return true
         } catch (e) {
-            throw new Error(`[logout failed] : ${!e.response ? 'No response from server' : e.response.data.error}`)
+            throw new Error(`[logout failed] : ${!e.response ? 'No response from server' : e.response.data.errmsg}`)
         }
     }
     static async Authenticate() {
@@ -37,7 +38,7 @@ export default class AuthService {
             let res = await auth.get('authenticate')
             return res.data
         } catch (e) {
-            console.warn(`[Authentication failed] : ${!e.response ? 'No response from server' : e.response.data.error}`)
+            console.warn(`[Authentication failed] : ${!e.response ? 'No response from server' : e.response.data.errmsg}`)
         }
     }
 }
