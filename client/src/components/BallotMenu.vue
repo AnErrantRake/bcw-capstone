@@ -118,16 +118,10 @@ export default {
         ballotID: this.activeBallot._id,
         timeoutEpoch: timeout.valueOf()
       };
-
-      this.$store.dispatch("startElection", election);
+        this.$store.dispatch("startElection", election);
     },
     checkSafeDelete(id) {
-      return (
-        this.$store.state.electionStore.elections.length > 0 &&
-        !this.$store.state.electionStore.elections.findIndex(
-          el => el.ballotID == id
-        )
-      );
+      return ((this.$store.state.electionStore.elections.findIndex(el => el.ballotID == id) == -1));
     }
   },
   components: {}
