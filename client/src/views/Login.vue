@@ -14,7 +14,7 @@
     </form>
     <form class="ml-1" v-else @submit.prevent="register">
       <input type="text" v-model="newUser.username" placeholder="name" class="mr-1" />
-      <input type="password" v-model="newUser.password" placeholder="password" />
+      <input type="password" minlength="6" v-model="newUser.password" placeholder="password (min 6 char)" />
       <button class="btn btn-primary  btn-sm mb-1 mx-1" type="submit">Create Account</button>
     </form>
 
