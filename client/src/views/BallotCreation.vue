@@ -117,13 +117,18 @@
     },
     methods: {
       addBallot() {
-        this.$store.dispatch('addBallot', this.newBallot);
-        this.newBallot = {
-          name: '',
-          noms: []
-        };
-        this.$store.dispatch('resetSearchResults')
-        this.$router.push({ name: 'home' });
+        if (this.newBallot.noms.length > 1) {
+          this.$store.dispatch('addBallot', this.newBallot);
+          this.newBallot = {
+            name: '',
+            noms: []
+          };
+          this.$store.dispatch('resetSearchResults')
+          this.$router.push({ name: 'home' });
+        }
+        else {
+          console.log("Error Creating Ballot!")
+        }
       },
       addNom() {
         this.newBallot.noms.push(this.newRestaurant);
