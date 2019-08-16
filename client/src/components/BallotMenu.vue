@@ -54,8 +54,10 @@
         <div class="col">
           <button @click="setActiveBallot(ballot)" data-toggle="modal" data-target="#dateModal"
             class="btn btn-primary btn-sm mx-1" type="submit">Batter</button>
-          <button @click="deleteBallot(ballot._id)" class="btn btn-danger btn-sm" type="submit"><i
-              class="fas fa-trash"></i></button>
+          <button @click="deleteBallot(ballot._id)" class="btn btn-danger btn-sm" type="submit"
+            v-if="checkSafeDelete(ballot._id)"><i class="fas fa-trash"></i></button>
+          <!-- <button @click="deleteBallot(ballot._id)" class="btn btn-danger btn-sm" type="submit" v-else inactive><i
+              class="fas fa-trash"></i></button> -->
         </div>
       </div>
     </div>
@@ -101,6 +103,9 @@
 
         this.$store.dispatch("startElection", election);
       },
+      checkSafeDelete(id) {
+        return (this.$store.state.electionStore.elections.length > 0 && !(this.$store.state.electionStore.elections.findIndex(el => el.ballotID == id)));
+      }
     },
     components: {}
   }
