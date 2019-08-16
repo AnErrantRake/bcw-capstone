@@ -23,6 +23,7 @@
     </div>
     <div class="row" v-for="vote in election.votes">
       <div class="col"><span>{{vote.name}}</span></div>
+      <div class="col-3"><button class="btn btn-danger" @click="removeVote(vote)">GARBAGE</button></div>
     </div>
 
   </div>
@@ -63,6 +64,13 @@
         } else {
           copy(`https://${location.hostname}/#/election/${this.election.pin}`)
         }
+      },
+      removeVote(vote) {
+        let index = this.election.votes.findIndex(el => el == vote);
+        this.election.votes.splice(index, 1);
+
+        this.$store.dispatch("updateElection", election);
+
       }
     },
     components: {

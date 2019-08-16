@@ -18,6 +18,8 @@ export default class ElectionController {
             .use(this.defaultRoute)
     }
 
+
+
     defaultRoute(req, res, next) {
         next({ status: 404, message: 'No Election Found' })
     }
@@ -91,6 +93,7 @@ export default class ElectionController {
     async updateElection(req, res, next) {
         try {
             let data = await _electionService.findOneAndUpdate({ _id: req.params.id }, req.body)
+            socket.notifyAddVote(data)
             return res.send(data)
         } catch (error) {
             next(error)
