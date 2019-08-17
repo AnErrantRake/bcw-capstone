@@ -6,7 +6,7 @@
       <div class="row justify-content-center">
         <input id="inputUsername" class="col-12" type="text" pattern="[A-Za-z0-9]{1,}$" v-model="creds.username"
           placeholder="name" required />
-        <small v-show="isDuplicate" class="form-text text-danger">
+        <small v-show="attempted && isDuplicate" class="col-12 form-text text-danger">
           Username is already in use.
         </small>
         <input class="col-12" type="password" minlength=6 v-model="creds.password" placeholder="password" required />
@@ -23,6 +23,7 @@
     data() {
       return {
         registering: true,
+        attempted: false,
         creds: {
           username: "",
           password: ""
@@ -38,12 +39,14 @@
       submitCreds() {
         if (this.registering) {
           this.$store.dispatch("register", this.creds);
+          this.attempted = true;
         } else {
           this.$store.dispatch("login", this.creds);
         }
       },
       toggleRegister() {
         this.registering = !this.registering
+        this.attempted = false;
       }
     },
     components: {}
@@ -52,5 +55,8 @@
 
 
 <style scoped>
-
+  form .col-12 {
+    max-width: 50vw;
+    min-width: 50vw;
+  }
 </style>
