@@ -15,23 +15,33 @@
       </p>
     </div>
     <div v-else>
-      <div v-if="voted">
-        <!-- this region for the voter status page -->
-        <p>Number of votes: {{ election.votes.length }} </p>
-        <p>Current Winner: <winner-display :votes="election.votes"></winner-display>
-        </p>
+
+      <div class="row" v-if="voted">
+        <div class="col">
+          <!-- this region for the voter status page -->
+          <p>Number of votes: {{ election.votes.length }} </p>
+          <p>Current Winner: <winner-display :votes="election.votes"></winner-display>
+          </p>
+        </div>
+
       </div>
-      <form v-else @submit.prevent="submitVotes">
-        <h4>Enter Name:</h4>
-        <input type="text" placeholder="Your Name" v-model='name' required>
-        <h4>Ranked Choices:</h4>
-        <draggable :list="election.ballotID.noms" :disabled="!enabled" class="list-group" ghost-class="ghost"
-          @start="dragging = true" @end="dragging = false">
-          <div class="list-group-item" v-for="candidate in election.ballotID.noms" :key="candidate">{{ candidate }}
-          </div>
-        </draggable>
-        <button class="btn btn-success" type="submit">Submit</button>
-      </form>
+      <div class="row" v-else>
+        <div class="col">
+          <form @submit.prevent="submitVotes" class="">
+            <h4>Enter Name:</h4>
+            <input type="text" class="col mt-1 mb-3" placeholder="Your Name" v-model='name' required>
+            <h5>Drag to rank your choices from most to least preferred:</h5>
+            <draggable :list="election.ballotID.noms" :disabled="!enabled" class="list-group" ghost-class="ghost"
+              @start="dragging = true" @end="dragging = false">
+              <div class="list-group-item" v-for="(candidate, index) in election.ballotID.noms" :key="candidate">
+                {{ index+1 }}. {{ candidate }}
+              </div>
+            </draggable>
+            <button class="btn btn-success col mt-4" type="submit">Submit</button>
+          </form>
+
+        </div>
+      </div>
     </div>
   </div>
 </template>
