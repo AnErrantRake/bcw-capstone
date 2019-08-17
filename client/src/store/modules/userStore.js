@@ -3,11 +3,16 @@ import AuthService from '../../AuthService'
 
 export default {
   state: {
-    user: {}
+    user: {},
+    duplicateUserName: false
   },
   mutations: {
     setUser(state, user) {
       state.user = user
+      state.duplicateUserName = false
+    },
+    isDuplicateUserName(state, status) {
+      state.duplicateUserName = status;
     }
   },
   actions: {
@@ -18,6 +23,9 @@ export default {
         commit('setUser', user)
         router.push({ name: "home" })
       } catch (e) {
+        if (e.message.includes("E11000")) {
+          commit("isDuplicateUserName", true);
+        }
         console.warn(e.message)
       }
     },

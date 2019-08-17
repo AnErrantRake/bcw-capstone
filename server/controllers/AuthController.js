@@ -38,6 +38,7 @@ export default class AuthController {
       res.status(201).send(user)
     }
     catch (err) {
+      console.log(err);
       res.status(400).send(err)
     }
   }

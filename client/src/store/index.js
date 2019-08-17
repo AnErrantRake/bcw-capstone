@@ -28,6 +28,7 @@ export default new Vuex.Store({
       state.ballotStore.ballots = []
 
       state.userStore.user = {}
+      state.userStore.duplicateUserName = false;
 
       state.searchStore.searchResults = []
     }
