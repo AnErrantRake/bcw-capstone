@@ -13,7 +13,8 @@
             </div>
           </form>
         </div>
-        <p class="actionText" @click="toggleDisplayLogin">I want to {{displayLogin ? 'join' : 'make'}} a WaFL</p>
+        <p class="actionText text-light" @click="toggleDisplayLogin">I want to {{displayLogin ? 'join' : 'make'}} a WaFL
+        </p>
       </div>
     </div>
   </div>

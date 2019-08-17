@@ -13,7 +13,8 @@
         <button class="col-12 btn btn-success btn-sm" type="submit">{{registering ? 'Create' : 'Login'}}</button>
       </div>
     </form>
-    <p class="col-12 text-center my-2" @click="toggleRegister">I {{registering ? 'have' : 'need'}} an account</p>
+    <p class="col-12 text-center my-2 text-light" @click="toggleRegister">I {{registering ? 'have' : 'need'}} an account
+    </p>
   </div>
 </template>
 
